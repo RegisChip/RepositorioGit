@@ -24,6 +24,12 @@
 
 #include <stdio.h>
 #include <conio.h>
+
+// algoritmo DFS
+
+#define FILAS 6
+#define COLUMNAS 8
+
 /*
 void cargar(int mat[6][8])
 {
@@ -38,6 +44,50 @@ void cargar(int mat[6][8])
 	}
 }
 */
+
+int esValido(int mat[FILAS][COLUMNAS], int fila, int col)
+{
+    return (fila >= 0 && fila < FILAS && col >= 0 && col < COLUMNAS && mat[fila][col] == 1);
+}
+
+void marcarIsla(int mat[FILAS][COLUMNAS], int fila, int col)
+{
+    int direccionFila[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+    int direccionColumna[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+    mat[fila][col] = 0;
+
+    for (int i = 0; i < 8; i++)
+    {
+        int nuevaFila = fila + direccionFila[i];
+        int nuevaColumna = col + direccionColumna[i];
+
+        if(esValido(mat, nuevaFila, nuevaColumna))
+        {
+            marcarIsla(mat, nuevaFila, nuevaColumna);
+        }
+    }
+}
+
+int contarIslas(int mat[FILAS][COLUMNAS])
+{
+    int numIslas = 0;
+
+    for(int f = 0; f < FILAS; f++){
+        for(int c = 0; c < COLUMNAS; c++)
+        {
+            if(mat[f][c] == 1)
+            {
+                marcarIsla(mat, f, c);
+                numIslas++;
+            }
+        }
+    }
+
+    return numIslas;
+
+}
+
 void imprimir(int mat[6][8])
 {
     int f,c;
@@ -55,14 +105,17 @@ int main(int argc, char **argv)
 {
 	//int mat[6][8];
 	int mat[6][8] = {
-        {0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 1, 1, 0, 0},
+        {0, 1, 1, 0, 1, 1, 0, 1},
         {0, 1, 1, 0, 0, 0, 0, 1},
         {0, 1, 1, 0, 0, 1, 0, 1},
-        {0, 1, 1, 0, 0, 1, 0, 1},
         {0, 0, 0, 0, 1, 1, 0, 1},
-        {0, 0, 0, 0, 0, 0, 0, 0}
+        {1, 1, 1, 0, 0, 0, 0, 0}
     };
 	imprimir(mat);
+
+    int numIslas = contarIslas(mat);
+    printf("Numero de islas: %d", numIslas);
 	getch();
 	return 0;
 }
