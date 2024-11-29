@@ -3,8 +3,7 @@
  */
 
 package com.mycompany.so_particiones;
-
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -31,9 +30,11 @@ public class SO_particiones {
         numParticiones = scanner.nextInt();
         
         Proceso[] particiones = new Proceso[numParticiones];
+        
         int particion;
         int totalParticiones = 0;
         int suma = 0;
+        
         try {
             
             if (numParticiones > 100){
@@ -46,7 +47,10 @@ public class SO_particiones {
                 System.out.println("Tamaño de la particion " + (i + 1) + ":" );
                 particion = scanner.nextInt();
                 particiones[i] = new Proceso(particion);
+                //particiones[i].setNumeroProceso(i+1);
+                //System.out.println(particiones[i]);
                 totalParticiones += particion;
+                
             }
             
             if(totalParticiones > tamanioMemoria){
@@ -55,34 +59,34 @@ public class SO_particiones {
                 
             }
             
-            boolean programa = true;
-            
-            while(programa = true){
+            //boolean programa = true;
+            int menu = 0;
+            while(menu != 4){
 
-                int menu = 0;
+                
                 System.out.println(" - Menu - ");
                 System.out.println("1. Asignar Proceso");
                 System.out.println("2. Liberar Proceso");
-                System.out.println("3. Moatrar Proceso");
+                System.out.println("3. Mostrar Proceso");
                 System.out.println("4. Salir");
                 
                 menu = scanner.nextInt();
                 
-                int id = 0;
-                int tamanio = 0;
+                //int id = 0;
+                //int tamanio = 0;
 
                 switch(menu){
                     
                     case 1: {
                         
                         System.out.println("Ingrese el ID del proceso: ");
-                        id = scanner.nextInt();
+                        int id = scanner.nextInt();
                         System.out.println("Ingrese el tamaño del proceso (KB): ");
-                        tamanio = scanner.nextInt();
+                        int tamanio = scanner.nextInt();
 
                         boolean asignado = false;
                         
-                        for (int i = 0; i < tamanioParticion; i++) {
+                        for (int i = 0; i < numParticiones; i++) {
                             if (particiones[i].getNumeroProceso() == -1 && particiones[i].getTamanioProceso() >= tamanio){
                                 particiones[i].setNumeroProceso(id);
                                 asignado = true;
@@ -105,17 +109,17 @@ public class SO_particiones {
                         int opcion = scanner.nextInt();
                         
                         boolean liberar = false;
-                        for (int i = 0; i < tamanioParticion; i++) {
-                            if (particiones[i].getNumeroProceso() == id){
+                        for (int i = 0; i < numParticiones; i++) {
+                            if (particiones[i].getNumeroProceso() == opcion){
                                 particiones[i].setNumeroProceso(-1);
                                 liberar = true;
-                                System.out.println("Proceso " + id + " liberado de la particion " + (i + 1));
+                                System.out.println("Proceso " + opcion + " liberado de la particion " + (i + 1));
                             }
                             
                         }
                            
                         if(!liberar){
-                            System.out.println("No se encontró el proceso " + id + " en ninguna particion");
+                            System.out.println("No se encontró el proceso " + opcion + " en ninguna particion");
                             
                         }
                             
@@ -130,7 +134,7 @@ public class SO_particiones {
                     case 4:{
                         
                         System.out.println("Bye bye");
-                        programa = false;
+                        //programa = false;
                         break;
                     }
                     
@@ -148,22 +152,7 @@ public class SO_particiones {
             e.printStackTrace();
         }
         
-        /*
-        int numeroParticiones = tamanioMemoria/tamanioParticion;
-        
-        for (int i = 0; i < numeroParticiones; i++) {
-            //proceso = new Proceso(tamanioParticion);
-            procesos.add(new Proceso(tamanioParticion));
-            
-        }
-        
-        */
-
     }
-    
-    //public static void asignar(ArrayList<Proceso> procesos){
-        
-    //}
     
     public static void imprimir(Proceso[] procesos){
         
@@ -172,8 +161,7 @@ public class SO_particiones {
         for (int i = 0; i < procesos.length; i++) {
             if (procesos[i].getNumeroProceso() == -1){
                 System.out.println("Particion " + (i + 1) + ": " + procesos[i].getTamanioProceso() + " KB libre");
-            }
-            if (procesos[i].getNumeroProceso() == -1){
+            } else { //ohh que mensa jfcskcj
                 System.out.println("Particion " + (i + 1) + ": " + procesos[i].getTamanioProceso() + " KB proceso " + procesos[i].getNumeroProceso());
             }
             
