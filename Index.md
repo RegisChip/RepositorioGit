@@ -51,7 +51,7 @@ int main(){
 ```c
 
 int main (){
-    return 0
+    return 0;
 }
 
 ```
@@ -73,7 +73,19 @@ Desventajas:
 * Puede presentar fragmentación interna.
 * Puede ser una sobrecarga administrar las tablasm de páginas.
 
-La **segmentación** 
+La **segmentación** divide la memoria en bloques de tamaño variable segun las necesidades logicas, es un esquema de manejo de memoria mediante el cual la estructura del programa refleja su división lógica; llevándose a cabo una agrupación lógica de la información en bloques de tamaño variable denominados segmentos.
+
+Ventajas:
+
+* Mejora de la Gestión de memoria.
+* Espacio de direccionamiento.
+* Protección de la memoria.
+
+Desventajas:
+
+* Fragmentacion Externa.
+* Tiempo de Acceso.
+* Espacio de direccionamiento limitado.
 
 
 2. Escribe un programa que simule una tabla de páginas para procesos con acceso aleatorio a memoria virtual.
@@ -89,9 +101,16 @@ int main() {
 
 ### 3.4 Administración de memoria virtual
 
-1. `Escribe un código que implemente el algoritmo de reemplazo de página "Least Recently Used" (LRU).`
+1. Escribe un código que implemente el algoritmo de reemplazo de página "Least Recently Used" (LRU).
 
-uuuuuu
+```c
+
+int main(){
+    return 0
+}
+
+```
+
 
 2. `Diseña un diagrama que represente el proceso de traducción de direcciones virtuales a físicas en un sistema con memoria virtual.`
 
@@ -112,9 +131,19 @@ uuuuuu
 
 ### 4.1 Dispositivos y manejadores de dispositivos
 
-1. `Explica la diferencia entre dispositivos de bloque y dispositivos de carácter. Da un ejemplo de cada uno.`
+1. Explica la diferencia entre dispositivos de bloque y dispositivos de carácter. Da un ejemplo de cada uno.
 
-uuuuuu
+Los **dispositivos de bloque** es un dispositivo de almacenamiento de datos que administra detos en segmentos de tamaño fijo, conocidos como bloques. Estos bloques son la unidad de datos más pequeña que el dispositivo puede leer o escribir.
+
+Los **dispositivos de carácter** son componentes que se comunican con la unidad central de proceso a través de bytes individuales. Se acceden secuencialmente, un carácter a la vez, y se pueden considerar como un flujo de bytes. Algunos ejemplos de dispositivos de carácter son el teclado, el ratón, un terminal de texto o una cinta magnética.
+
+Diferencias entre los dispositivos:
+
+* **Dispositivos de bloque** Estos dispositivos manejan datos en bloques de tamaño fijo y permiten un acceso aleatorio eficiente a los datos. Son ideales para almacenar grandes volúmenes de información.
+
+* **Dispositivos de carácter** Manejan datos como una corriente continua, procesándolos en el orden en que llegan, lo cual es ideal para dispositivos que requieren procesamiento inmediato de datos.
+
+
 
 2. `Diseña un progama que implemente un manejador de dispositivos sencillo para un dispositivo virtual de entrada.`
 
@@ -122,23 +151,50 @@ uuuuuu
 
 ### 4.2 Mecanismos y funciones de los manejadores de dispositivos
 
-1. `Investiga qué es la interrupción por E/S y cómo la administra el sistema operativo. Escribe un ejemplo en pseudocódigo para simular este proceso.`
+1. Investiga qué es la interrupción por E/S y cómo la administra el sistema operativo. Escribe un ejemplo en pseudocódigo para simular este proceso.
 
-uuuuuu
+Una **interrupción** viene determinada por la ocurrencia de una señal externa que provoca la bifurcación a una dirección especifica de memoria, interrumpiendo temporalmente la ejecución del programa principal. Así que, una **interrupción por entrada y salida (E/S)** es un mecanismo que altera el orden de ejecución de instrucciones en respuesta a un evento externo. Este evento es generado por el *hardware* de entrada y salida de manera asincrónica, es decir, fuera del control del programa que se está ejecutando
+
+
+<!-- PONER UN PSEUDOCODIGOOOO-->
 
 2. `Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación.`
+
+```c
+
+int main(){
+    return 0;
+}
+
+```
 
 uuuuuu
 
 ### 4.3 Estructura de datos para manejo de dispositivos
 
-1. `Investiga y explica qué es una cola E/S. Diseña una simulación de una cola con prioridad.`
+1. Investiga y explica qué es una cola E/S. Diseña una simulación de una cola con prioridad.
 
-uuuuuu
+Una **cola de entrada/salida (E/S)** es una estructura de datos utilizada para gestionar las solicitudes de entrada y salida de datos entre el sistema y los dispositivos periféricos. Es una cola (generalmente *FIFO*) en la que se almacenan las solicitudes de E/S a medida que se generan. Las solicitudes se procesan en el orden en que llegan.
+
+<!-- HACER UNA SIMULACION -->
+```c
+
+int main(){
+    return 0;
+}
+
+```
+
 
 2. `Escribe un programa que simule las operaciones de un manejo de dispositivos utilizando una tabla de estructuras.`
 
-uuuuuu
+```c
+
+int main(){
+    return 0;
+}
+
+```
 
 ### 4.4 Operaciones de Entrada/Salida
 
@@ -162,7 +218,7 @@ uuuuuu
 
 ### Avanzados
 
-1. `Explica cómo los sistemas operativos morenos optimizan las operaciones de entrada/salida con el uso de la memoria caché.`
+1. `Explica cómo los sistemas operativos modernos optimizan las operaciones de entrada/salida con el uso de la memoria caché.`
 
 uuuuuu
 
