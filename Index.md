@@ -4,33 +4,88 @@
 ## Administración de Memoria
 ### 3.1 Política y Filosofía
 
-1. `¿Cuál es la diferencia entre fragmentación interna y externa? Explica como cada una afecta el rendimiento de la memoria`
+1. ¿Cuál es la diferencia entre fragmentación interna y externa? 
+Explica como cada una afecta el rendimiento de la memoria
 
-uuuuuu
+La **fragmentación interna** ocurre cuando hay espacio interno malgastado debido al hecho de que el bloque de datos cargado es menor que la particion. Basicamente, se utiliza una particion con una memoria asignada grande es malgastada por un proceso de mucho menor.
 
-2. `Investiga y explica las politicas de reemplazo de páginas en sistemas operativos. ¿Cuál consideras más eficiente y por qué?`
+La **fragmentación interna** afecta al dentimiento de la memoria principalmente por el desperdicio de espacio en la memoria. En un sistema de memoria virtual, tener una mayor fragmentación interna provocará que la tasa de fallos al almacenar datos y estructuras de control de memoria. Y en general, el rendimiento del equipo será más bajo con respiestas lentas y una menor capacidad para cargar trabajos en memoria.
 
-uuuuuu
+Por otra parte la **fragmentación externa** ocurre cuando hay una cantidad suficiente de área dentro de la memoria para satisfacer la solicitud de memoria, sin embargo, no se puede cumplir la solicitud ya que la memoria libre esta intercala con la memoria usada.
+
+La **fragmentación externa** generará una dificultad al asignar memoria para grandes bloques de datos, debido a lo dispersa que esta aún si en general se tiene memoria suficiente. En caso de una memoria virtual, la fragmentacion externa podría aumentar el uso de la memoria de intercambio (swap), ya que el sistema puede mover bloques de memoria activos a la memoria de intercambio para consolidar la memoria libre, provocando que se más lento acceder a la memoria principal.
+
+
+2. Investiga y explica las politicas de reemplazo de páginas en sistemas operativos. ¿Cuál consideras más eficiente y por qué?
+
+La politica de reemplazo es un algoritmo que tiene como objetivo reemplazar o eliminar la página que tenga menor posibilidad de ser referenciada en el futuro cercano. Mientras más sofisticado sea el algoritmo, mayor será la sobrecarga de hardware y software utilizada para implementarla.
+
+* **LRU (Least Recently Used)** Algortimno que reemplaza la página que no ha sido utlizada durante más tiempo. Este algoritmo prioriza la carga de trabajos típicos, sin embargo, es costoso en términos de tiempo y espacio, ya que requiere seguimiento continuo del uso de las páginas.
+* **FIFO (First In, First Out)**
+Algoritmo reemplaza la página más antigua en la memoria (la que ingresó primero), este algoritmo es simple en su implementación, pero, pued egenerar resultados ineficientes como el problema *Belady* (más fallos de página al aumentar el tamaño de memoria).
+* **Optimal**
+Algoritmo que reemplaza la página que no se necesitará por más tiempo en el fututo. Este algoritmo ofrece el menor número de fallos de página, pero al no poder predecir que página no sé utilizará en el futuro, por lo que es un argoritmo en un sistema ideal.  
+
+<!--
+
+FALTA PONER LOS TIPOS Y CUAL ES EL MÁS CHIDO
+
+ -->
+
 
 ### 3.2 Memoria Real
 
-1. `Escribe un progarama en C o Python que simule la administración de memoria mediante particiones fijas.`
+1. Escribe un progarama en C o Python que simule la administración de memoria mediante particiones fijas.
 
-uuuuuu
+```c
 
-2. `Diseña un algoritmo para calcular qué procesos pueden ser asignados a un sistema con memoria real limitada utilizando el algoritmo de "primera cabida".`
+int main(){
+    return 0;
+}
 
-uuuuuu
+```
+
+
+2. Diseña un algoritmo para calcular qué procesos pueden ser asignados a un sistema con memoria real limitada utilizando el algoritmo de "primera cabida".
+
+```c
+
+int main (){
+    return 0
+}
+
+```
 
 ### 3.3 Organización de memoria virtual
 
-1. `Investiga y explica el concepto de "paginación" y "segmentación". ¿Cuáles son las ventajas y desventajas de cada tecnica?`
+1. Investiga y explica el concepto de "paginación" y "segmentación". ¿Cuáles son las ventajas y desventajas de cada tecnica?
 
-uuuuuu
+La **paginación** Divide la memoria en bloques de tamaño dijo (páginas). Es un modelo que organiza la memoria fija en el que se divide toda la memoria en porciones del mismo tamaño.
 
-2. `Escribe un programa que simule una tabla de páginas para procesos con acceso aleatorio a memoria virtual.`
+Ventajas:
 
-uuuuuu
+* Mejora la gestión de la memoria.
+* Reduce la probabilidad de errores y fallas de memoria.
+* Evita que la memoria se corrompa o sobreescriba.
+
+Desventajas:
+
+* Puede presentar fragmentación interna.
+* Puede ser una sobrecarga administrar las tablasm de páginas.
+
+La **segmentación** 
+
+
+2. Escribe un programa que simule una tabla de páginas para procesos con acceso aleatorio a memoria virtual.
+
+```c
+
+int main() {
+    return 0
+}
+
+```
+
 
 ### 3.4 Administración de memoria virtual
 
@@ -52,7 +107,7 @@ uuuuuu
 
 uuuuuu
 
-##
+---
 ## Administración de Entrada/Salida
 
 ### 4.1 Dispositivos y manejadores de dispositivos
