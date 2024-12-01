@@ -5,7 +5,7 @@
 ### 3.1 Política y Filosofía
 
 1. ¿Cuál es la diferencia entre fragmentación interna y externa? 
-Explica como cada una afecta el rendimiento de la memoria
+Explica como cada una afecta el rendimiento de la memoria ✔️
 
 La **fragmentación interna** ocurre cuando hay espacio interno malgastado debido al hecho de que el bloque de datos cargado es menor que la particion. Basicamente, se utiliza una particion con una memoria asignada grande es malgastada por un proceso de mucho menor.
 
@@ -28,29 +28,186 @@ Algoritmo que reemplaza la página que no se necesitará por más tiempo en el f
 
 <!--
 
-FALTA PONER LOS TIPOS Y CUAL ES EL MÁS CHIDO
+CUAL ES EL MÁS CHIDO
 
  -->
 
 
 ### 3.2 Memoria Real
 
-1. Escribe un progarama en C o Python que simule la administración de memoria mediante particiones fijas.
+1. Escribe un progarama en C o Python que simule la administración de memoria mediante particiones fijas. ✔️
 
 ```c
 
+#include <stdio.h>
+#include <stdbool.h>
+
+#define maximoParticiones 10
+
+typedef struct{
+    int size;
+    bool isFree;
+} Particion;
+
+void printParticion(Particion particiones[], int particionCont){
+    printf("\nEstado de las particiones:\n");
+    for (int i = 0; i < particionCont; i++){
+        printf("Particion %d: Tamaño = %d, Estado = %s 'n",
+        i + 1, particiones[i].size, particiones[i].isFree "Libre" : "Ocupado"
+        );
+    }
+    printf("\n");
+}
+
+void asignarProceso(Particion particiones[], int particionCont){
+    int procesoSize;
+    printf("\nTamaño del proceso a asignar: ");
+    scanf("%d", &procesoSize);
+
+    for(int i = 0; i < particionCont; i++){
+        if(particiones[i].isFree && particiones[i].size >= procesoSize){
+            particiones[i].isFree = false;
+            printf("Proceso asignado a la particion %d.\n". i+1):
+        }
+    }
+    printf("No hay partición disponible para el proceso.\n");
+}
+
+void realizarParticion(Particion particiones[], int particionCont) {
+    int numeroParticion;
+    printf("\nNúmero de partición a liberar: ");
+    scanf("%d", &numeroParticion);
+
+    if (numeroParticion < 1 || numeroParticion > particionCont) {
+        printf("Número de partición inválido.\n");
+        return;
+    }
+
+    if (!particiones[numeroParticion - 1].isFree) {
+        particiones[numeroParticion - 1].isFree = true;
+        printf("Partición %d liberada.\n", numeroParticion);
+    } else {
+        printf("La partición %d ya está libre.\n", numeroParticion);
+    }
+}
+
 int main(){
+
+    Particion particion[maximoParticiones];
+    int particionCount;
+
+    printf("Ingrese el número de particiones: ");
+    scanf("%d", &particionCount);
+
+    if (particionCount > maximoParticiones || particionCount <= 0) {
+        printf("Número inválido de particiones. Debe estar entre 1 y %d.\n", maximoParticiones);
+        return 1;
+    }
+
+    for (int i = 0; i < particionCount; i++) {
+        printf("Tamaño de la partición %d: ", i + 1);
+        scanf("%d", &particion[i].size);
+        particion[i].isFree = true;
+    }
+
+    int opcion;
+    do {
+        printf("\n--- Administrador de Memoria ---\n");
+        printf("1. Ver particiones\n");
+        printf("2. Asignar proceso\n");
+        printf("3. Liberar partición\n");
+        printf("4. Salir\n");
+        printf("Elija una opción: ");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                printParticion(particion, particionCount);
+                break;
+            case 2:
+                asignarProceso(particion, particionCount);
+                break;
+            case 3:
+                realizarParticion(particion, particionCount);
+                break;
+            case 4:
+                printf("Saliendo del programa...\n");
+                break;
+            default:
+                printf("Opción no válida.\n");
+        }
+    } while (opcion != 4);
+
     return 0;
 }
 
 ```
 
 
-2. Diseña un algoritmo para calcular qué procesos pueden ser asignados a un sistema con memoria real limitada utilizando el algoritmo de "primera cabida".
+2. Diseña un algoritmo para calcular qué procesos pueden ser asignados a un sistema con memoria real limitada utilizando el algoritmo de "primera cabida". ✔️
 
 ```c
 
-int main (){
+#include <stdio.h>
+#include <stdbool.h>
+
+#define maximoParticiones 20
+#define maximoProcesos 20
+
+void firstFit(int particiones[], bool isFree[], int particionCount, int proceso[], int procesoCount) {
+    for (int i = 0; i < procesoCount; i++) {
+        bool asignado = false;
+        for (int j = 0; j < particionCount; j++) {
+            if (isFree[j] && particiones[j] >= proceso[i]) {
+                printf("Proceso %d (tamanio %d) asignado a particion %d (tamanio %d).\n", 
+                        i + 1, proceso[i], j + 1, particiones[j]);
+                isFree[j] = false;
+                asignado = true;
+                break;
+            }
+        }
+        if (!asignado) {
+            printf("Proceso %d (tamanio %d) no puede ser asignado.\n", i + 1, proceso[i]);
+        }
+    }
+}
+
+int main() {
+    int particiones[maximoParticiones], proceso[maximoProcesos];
+    bool isFree[maximoParticiones];
+    int particionCount, procesoCount;
+
+   
+    printf("Ingrese el numero de particiones: ");
+    scanf("%d", &particionCount);
+    if (particionCount > maximoParticiones || particionCount <= 0) {
+        printf("Numero invalido de particiones.\n");
+        return 1;
+    }
+
+    for (int i = 0; i < particionCount; i++) {
+        printf("Tamanio de la particion %d: ", i + 1);
+        scanf("%d", &particiones[i]);
+        isFree[i] = true;
+    }
+
+    
+    printf("\nIngrese el numero de procesos: ");
+    scanf("%d", &procesoCount);
+    if (procesoCount > maximoProcesos || procesoCount <= 0) {
+        printf("Numero invalido de procesos.\n");
+        return 1;
+    }
+
+    for (int i = 0; i < procesoCount; i++) {
+        printf("Tamanio del proceso %d: ", i + 1);
+        scanf("%d", &proceso[i]);
+    }
+
+    
+    printf("\n--- Asignacion de procesos ---\n");
+    firstFit(particiones, isFree, particionCount, proceso, procesoCount);
+
     return 0;
 }
 
@@ -58,7 +215,7 @@ int main (){
 
 ### 3.3 Organización de memoria virtual
 
-1. Investiga y explica el concepto de "paginación" y "segmentación". ¿Cuáles son las ventajas y desventajas de cada tecnica?
+1. Investiga y explica el concepto de "paginación" y "segmentación". ¿Cuáles son las ventajas y desventajas de cada tecnica? ✔️
 
 La **paginación** Divide la memoria en bloques de tamaño dijo (páginas). Es un modelo que organiza la memoria fija en el que se divide toda la memoria en porciones del mismo tamaño.
 
@@ -92,8 +249,93 @@ Desventajas:
 
 ```c
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define paginas 4
+#define marcos 8
+#define paginasMax 16
+
+typedef struct {
+    int paginaNumero;
+    int fragmentoNumero;
+} Pagina;
+
+void iniciarPaginaTabla(Pagina paginaTabla[], int paginaCont) {
+    for (int i = 0; i < paginaCont; i++) {
+        paginaTabla[i].paginaNumero = i;
+        paginaTabla[i].fragmentoNumero = -1;
+    }
+}
+
+void asignarFrames(Pagina paginaTabla[], int paginaCont) {
+    int asignarFrame[FRAME_COUNT] = {0};
+    for (int i = 0; i < paginaCont; i++) {
+        int frame;
+        do {
+            frame = rand() % FRAME_COUNT;
+        } while (asignarFrame[frame] == 1);
+
+        paginaTabla[i].fragmentoNumero = frame;
+        asignarFrame[frame] = 1;
+    }
+}
+
+void imprimirPaginaTabla(Pagina paginaTabla[], int paginaCont) {
+    printf("\nTabla de Paginas:\n");
+    printf("Pagina\tMarco\n");
+    for (int i = 0; i < paginaCont; i++) {
+        printf("%d\t%d\n", paginaTabla[i].paginaNumero, paginaTabla[i].fragmentoNumero);
+    }
+}
+
+void accederMemoria(Pagina paginaTabla[], int paginaCont) {
+    int direccionVirtual;
+    printf("\nIngrese una direccion virtual (en KB): ");
+    scanf("%d", &direccionVirtual);
+
+    int paginaNumero = direccionVirtual / paginas;
+    int offset = direccionVirtual % paginas;    // Desplazamiento dentro de la página
+
+    if (paginaNumero >= paginaCont) {
+        printf("Direccion virtual fuera de rango. (Pagina %d no existe)\n", paginaNumero);
+    } else if (paginaTabla[paginaNumero].fragmentoNumero == -1) {
+        printf("Fallo de pagina. Pagina %d no esta cargada en memoria.\n", paginaNumero);
+    } else {
+        int fragmentoNumero = paginaTabla[paginaNumero].fragmentoNumero;
+        int direccionFisica = fragmentoNumero * paginas + offset
+        printf("Direccion virtual %d KB -> Direccion fisica %d KB (Pagina %d, Marco %d, Desplazamiento %d)\n",
+               direccionVirtual, direccionFisica, paginaNumero, fragmentoNumero, offset);
+    }
+}
+
 int main() {
-    return 0
+    srand(time(NULL));
+
+    Pagina paginaTabla[paginasMax];
+    int paginaCont;
+
+    printf("Ingrese el numero de paginas del proceso (maximo %d): ", paginasMax);
+    scanf("%d", &paginaCont);
+    if (paginaCont <= 0 || paginaCont > paginasMax) {
+        printf("Numero de paginas invalido.\n");
+        return 1;
+    }
+
+    iniciarPaginaTabla(paginaTabla, paginaCont);
+    asignarFrames(paginaTabla, paginaCont);
+    imprimirPaginaTabla(paginaTabla, paginaCont);
+
+    char choice;
+    do {
+        accederMemoria(paginaTabla, paginaCont);
+        printf("\n¿Desea acceder a otra direccion? (s/n): ");
+        scanf(" %c", &choice);
+    } while (choice == 's' || choice == 'S');
+
+    printf("Saliendo de la simulacion.\n");
+    return 0;
 }
 
 ```
@@ -131,7 +373,7 @@ uuuuuu
 
 ### 4.1 Dispositivos y manejadores de dispositivos
 
-1. Explica la diferencia entre dispositivos de bloque y dispositivos de carácter. Da un ejemplo de cada uno.
+1. Explica la diferencia entre dispositivos de bloque y dispositivos de carácter. Da un ejemplo de cada uno. ✔️
 
 Los **dispositivos de bloque** es un dispositivo de almacenamiento de datos que administra detos en segmentos de tamaño fijo, conocidos como bloques. Estos bloques son la unidad de datos más pequeña que el dispositivo puede leer o escribir.
 
