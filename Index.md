@@ -16,7 +16,7 @@ Por otra parte la **fragmentación externa** ocurre cuando hay una cantidad sufi
 La **fragmentación externa** generará una dificultad al asignar memoria para grandes bloques de datos, debido a lo dispersa que esta aún si en general se tiene memoria suficiente. En caso de una memoria virtual, la fragmentacion externa podría aumentar el uso de la memoria de intercambio (swap), ya que el sistema puede mover bloques de memoria activos a la memoria de intercambio para consolidar la memoria libre, provocando que se más lento acceder a la memoria principal.
 
 
-2. Investiga y explica las politicas de reemplazo de páginas en sistemas operativos. ¿Cuál consideras más eficiente y por qué?
+2. Investiga y explica las politicas de reemplazo de páginas en sistemas operativos. ¿Cuál consideras más eficiente y por qué? ✔️
 
 La politica de reemplazo es un algoritmo que tiene como objetivo reemplazar o eliminar la página que tenga menor posibilidad de ser referenciada en el futuro cercano. Mientras más sofisticado sea el algoritmo, mayor será la sobrecarga de hardware y software utilizada para implementarla.
 
@@ -26,16 +26,14 @@ Algoritmo reemplaza la página más antigua en la memoria (la que ingresó prime
 * **Optimal**
 Algoritmo que reemplaza la página que no se necesitará por más tiempo en el fututo. Este algoritmo ofrece el menor número de fallos de página, pero al no poder predecir que página no sé utilizará en el futuro, por lo que es un argoritmo en un sistema ideal.  
 
-<!--
-
-CUAL ES EL MÁS CHIDO
-
- -->
+Bajo condiciones ideales, el Optimal sería sin dudar el más practico al poder predecir que páginas ya no serán necesarias. Bajo condiciones practicas, el algoritmo LRU plantea una solución viable al basasrse en la actividad que se le da a las páginas. En el caso del FIFO, no es viable al basarse en la antiguedad de la página pues, una caracteristica de ese tipo no determina si será o no usada.
 
 
 ### 3.2 Memoria Real
 
 1. Escribe un progarama en C o Python que simule la administración de memoria mediante particiones fijas. ✔️
+
+<!-- CODIGO 1 LISTO -->
 
 ```c
 
@@ -52,42 +50,42 @@ typedef struct{
 void printParticion(Particion particiones[], int particionCont){
     printf("\nEstado de las particiones:\n");
     for (int i = 0; i < particionCont; i++){
-        printf("Particion %d: Tamaño = %d, Estado = %s 'n",
-        i + 1, particiones[i].tamanio, particiones[i].isFree "Libre" : "Ocupado"
-        );
+        printf("Particion %d: Tamanio = %d, Estado = %s \n",
+        i + 1, particiones[i].tamanio, particiones[i].isFree? "Libre" : "Ocupado");
     }
     printf("\n");
 }
 
 void asignarProceso(Particion particiones[], int particionCont){
     int procesoSize;
-    printf("\nTamaño del proceso a asignar: ");
+    printf("\nTamanio del proceso a asignar: ");
     scanf("%d", &procesoSize);
 
     for(int i = 0; i < particionCont; i++){
         if(particiones[i].isFree && particiones[i].tamanio >= procesoSize){
             particiones[i].isFree = false;
-            printf("Proceso asignado a la particion %d.\n". i+1):
+            printf("Proceso asignado a la particion %d.\n", i+1);
+            return;
         }
     }
-    printf("No hay partición disponible para el proceso.\n");
+    printf("No hay particion disponible para el proceso.\n");
 }
 
 void realizarParticion(Particion particiones[], int particionCont) {
     int numeroParticion;
-    printf("\nNúmero de partición a liberar: ");
+    printf("\nNumero de particion a liberar: ");
     scanf("%d", &numeroParticion);
 
     if (numeroParticion < 1 || numeroParticion > particionCont) {
-        printf("Número de partición inválido.\n");
+        printf("Numero de particion invalido.\n");
         return;
     }
 
     if (!particiones[numeroParticion - 1].isFree) {
         particiones[numeroParticion - 1].isFree = true;
-        printf("Partición %d liberada.\n", numeroParticion);
+        printf("Particion %d liberada.\n", numeroParticion);
     } else {
-        printf("La partición %d ya está libre.\n", numeroParticion);
+        printf("La particion %d ya esta libre.\n", numeroParticion);
     }
 }
 
@@ -96,16 +94,16 @@ int main(){
     Particion particion[maximoParticiones];
     int particionCount;
 
-    printf("Ingrese el número de particiones: ");
+    printf("Ingrese el numero de particiones: ");
     scanf("%d", &particionCount);
 
     if (particionCount > maximoParticiones || particionCount <= 0) {
-        printf("Número inválido de particiones. Debe estar entre 1 y %d.\n", maximoParticiones);
+        printf("Numero invalido de particiones. Debe estar entre 1 y %d.\n", maximoParticiones);
         return 1;
     }
 
     for (int i = 0; i < particionCount; i++) {
-        printf("Tamaño de la partición %d: ", i + 1);
+        printf("Tamanio de la particion %d: ", i + 1);
         scanf("%d", &particion[i].tamanio);
         particion[i].isFree = true;
     }
@@ -115,9 +113,9 @@ int main(){
         printf("\n--- Administrador de Memoria ---\n");
         printf("1. Ver particiones\n");
         printf("2. Asignar proceso\n");
-        printf("3. Liberar partición\n");
+        printf("3. Liberar particion\n");
         printf("4. Salir\n");
-        printf("Elija una opción: ");
+        printf("Elija una opcion: ");
         scanf("%d", &opcion);
 
         switch (opcion) {
@@ -134,7 +132,7 @@ int main(){
                 printf("Saliendo del programa...\n");
                 break;
             default:
-                printf("Opción no válida.\n");
+                printf("Opcion no válida.\n");
         }
     } while (opcion != 4);
 
@@ -145,6 +143,8 @@ int main(){
 
 
 2. Diseña un algoritmo para calcular qué procesos pueden ser asignados a un sistema con memoria real limitada utilizando el algoritmo de "primera cabida". ✔️
+
+<!-- CODIGO 2 LISTO -->
 
 ```c
 
@@ -247,11 +247,13 @@ Desventajas:
 
 2. Escribe un programa que simule una tabla de páginas para procesos con acceso aleatorio a memoria virtual. ✔️
 
+<!-- CODIGO 3 TERMINADO -->
+
 ```c
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <tiempo.h>
+#include <time.h>
 
 #define paginas 4
 #define marcos 8
@@ -270,11 +272,11 @@ void iniciarPaginaTabla(Pagina paginaTabla[], int paginaCont) {
 }
 
 void asignarFrames(Pagina paginaTabla[], int paginaCont) {
-    int asignarFrame[FRAME_COUNT] = {0};
+    int asignarFrame[marcos] = {0};
     for (int i = 0; i < paginaCont; i++) {
         int frame;
         do {
-            frame = rand() % FRAME_COUNT;
+            frame = rand() % paginaCont;
         } while (asignarFrame[frame] == 1);
 
         paginaTabla[i].fragmentoNumero = frame;
@@ -304,14 +306,14 @@ void accederMemoria(Pagina paginaTabla[], int paginaCont) {
         printf("Fallo de pagina. Pagina %d no esta cargada en memoria.\n", paginaNumero);
     } else {
         int fragmentoNumero = paginaTabla[paginaNumero].fragmentoNumero;
-        int direccionFisica = fragmentoNumero * paginas + offset
+        int direccionFisica = fragmentoNumero * paginas + offset;
         printf("Direccion virtual %d KB -> Direccion fisica %d KB (Pagina %d, Marco %d, Desplazamiento %d)\n",
                direccionVirtual, direccionFisica, paginaNumero, fragmentoNumero, offset);
     }
 }
 
 int main() {
-    srand(tiempo(NULL));
+    srand(time(NULL));
 
     Pagina paginaTabla[paginasMax];
     int paginaCont;
@@ -330,7 +332,7 @@ int main() {
     char opcion;
     do {
         accederMemoria(paginaTabla, paginaCont);
-        printf("\n¿Desea acceder a otra direccion? (s/n): ");
+        printf("\nDesea acceder a otra direccion? (s/n): ");
         scanf(" %c", &opcion);
     } while (opcion == 's' || opcion == 'S');
 
@@ -343,7 +345,9 @@ int main() {
 
 ### 3.4 Administración de memoria virtual
 
-1. Escribe un código que implemente el algoritmo de reemplazo de página "Least Recently Used" (LRU).
+1. Escribe un código que implemente el algoritmo de reemplazo de página "Least Recently Used" (LRU). ✔️
+
+<!-- CODIGO 4 TERMINADO -->
 
 ```c
 
@@ -411,36 +415,36 @@ void LRU(int paginas[], int paginaCont, int frameCont) {
             falla++;
         }
 
-        printf("Acceso a página %d -> ", paginas[i]);
+        printf("Acceso a pagina %d -> ", paginas[i]);
         imprimirFrames(frames, frameCont);
         tiempo++;
     }
 
-    printf("\nNúmero total de fallos de página: %d\n", falla);
+    printf("\nNumero total de fallos de pagina: %d\n", falla);
 }
 
 int main() {
     int paginas[paginasMaximo], paginaCont, frameCont;
 
-    printf("Ingrese el número de accesos a páginas: ");
+    printf("Ingrese el numero de accesos a paginas: ");
     scanf("%d", &paginaCont);
 
     if (paginaCont <= 0 || paginaCont > paginasMaximo) {
-        printf("Número de accesos inválido.\n");
+        printf("Numero de accesos invalido.\n");
         return 1;
     }
 
-    printf("Ingrese las páginas (secuencia de accesos):\n");
+    printf("Ingrese las paginas (secuencia de accesos):\n");
     for (int i = 0; i < paginaCont; i++) {
-        printf("Página %d: ", i + 1);
+        printf("Pagina %d: ", i + 1);
         scanf("%d", &paginas[i]);
     }
 
-    printf("Ingrese el número de marcos de página disponibles: ");
+    printf("Ingrese el numero de marcos de pagina disponibles: ");
     scanf("%d", &frameCont);
 
     if (frameCont <= 0 || frameCont > framesMaximo) {
-        printf("Número de marcos inválido.\n");
+        printf("Numero de marcos invalido.\n");
         return 1;
     }
 
@@ -462,7 +466,9 @@ uuuuuu
 
 uuuuuu
 
-2. `Realiza una simulación en cualquier lenguaje de programación que emule el swapping de procesos en memoria virtual.`
+2. Realiza una simulación en cualquier lenguaje de programación que emule el swapping de procesos en memoria virtual. ✔️
+
+<!-- CODIGO 5 TERMINADO -->
 
 ```c
 
@@ -515,7 +521,7 @@ int getSwapUsado(Proceso swap[], int swapCont) {
 void hacerSwapping(Proceso ram[], int *ramCont, Proceso swap[], int *swapCont, int espacio) {
     while (getMemoriaUsada(ram, *ramCont) + espacio > tamanioRAM) {
         if (*swapCont >= procesosMaximo) {
-            printf("Swap lleno. No se puede realizar más swapping.\n");
+            printf("Swap lleno. No se puede realizar mas swapping.\n");
             exit(1);
         }
 
@@ -539,20 +545,20 @@ int main() {
     int opcion;
     int procesoID = 1;
 
-    printf("Simulación de Swapping de Procesos en Memoria Virtual\n");
+    printf("Simulacion de Swapping de Procesos en Memoria Virtual\n");
 
     while (1) {
-        printf("\n1. Añadir proceso\n2. Mostrar estado de la memoria\n3. Salir\n");
-        printf("Seleccione una opción: ");
+        printf("\n1. Aniadir proceso\n2. Mostrar estado de la memoria\n3. Salir\n");
+        printf("Seleccione una opcion: ");
         scanf("%d", &opcion);
 
         if (opcion == 1) {
             int tamanioProceso;
-            printf("Ingrese el tamaño del proceso (MB): ");
+            printf("Ingrese el tamanio del proceso (MB): ");
             scanf("%d", &tamanioProceso);
 
             if (tamanioProceso > tamanioRAM) {
-                printf("El proceso es demasiado grande para la RAM. Operación cancelada.\n");
+                printf("El proceso es demasiado grande para la RAM. Operacion cancelada.\n");
                 continue;
             }
 
@@ -566,23 +572,22 @@ int main() {
                 ram[ramCont].tamanio = tamanioProceso;
                 ram[ramCont].enMemory = 1;
                 ramCont++;
-                printf("Proceso %d (%d MB) añadido a RAM.\n", procesoID - 1, tamanioProceso);
+                printf("Proceso %d (%d MB) aniadido a RAM.\n", procesoID - 1, tamanioProceso);
             } else {
-                printf("No se puede añadir el proceso. RAM llena.\n");
+                printf("No se puede aniadir el proceso. RAM llena.\n");
             }
         } else if (opcion == 2) {
             imprimirMemoria(ram, ramCont, swap, swapCont);
         } else if (opcion == 3) {
-            printf("Saliendo de la simulación.\n");
+            printf("Saliendo de la simulacion.\n");
             break;
         } else {
-            printf("Opción no válida. Intente de nuevo.\n");
+            printf("Opcion no valida. Intente de nuevo.\n");
         }
     }
 
     return 0;
 }
-
 
 ```
 
@@ -605,8 +610,9 @@ Diferencias entre los dispositivos:
 * **Dispositivos de carácter** Manejan datos como una corriente continua, procesándolos en el orden en que llegan, lo cual es ideal para dispositivos que requieren procesamiento inmediato de datos.
 
 
+2. Diseña un progama que implemente un manejador de dispositivos sencillo para un dispositivo virtual de entrada. ✔️
 
-2. `Diseña un progama que implemente un manejador de dispositivos sencillo para un dispositivo virtual de entrada.`
+<!-- CODIGO 6 TERMINADO -->
 
 ```c
 
@@ -614,76 +620,76 @@ Diferencias entre los dispositivos:
 #include <stdlib.h>
 #include <string.h>
 
-#define BUFFER_SIZE 256
+#define tamanioBuffer 256
 
 typedef struct {
-    char buffer[BUFFER_SIZE];
-    int head;               
-    int tail;   
-    int isConnected; 
-} VirtualDevice;
+    char buffer[tamanioBuffer];
+    int cabeza;               
+    int cola;   
+    int estaConectado; 
+} Virtual;
 
-void initializeDevice(VirtualDevice *device) {
-    memset(device->buffer, 0, BUFFER_SIZE);
-    device->head = 0;
-    device->tail = 0;
-    device->isConnected = 1;
+void inicializar(Virtual *virtual) {
+    memset(virtual->buffer, 0, tamanioBuffer);
+    virtual->cabeza = 0;
+    virtual->cola = 0;
+    virtual->estaConectado = 1;
     printf("Dispositivo inicializado y conectado.\n");
 }
 
-void receiveData(VirtualDevice *device, const char *data) {
-    if (!device->isConnected) {
-        printf("El dispositivo no está conectado.\n");
+void recibirData(Virtual *virtual, const char *data) {
+    if (!virtual->estaConectado) {
+        printf("El dispositivo no esta conectado.\n");
         return;
     }
 
     int len = strlen(data);
     for (int i = 0; i < len; i++) {
-        if ((device->head + 1) % BUFFER_SIZE == device->tail) {
-            printf("El búfer está lleno. Datos descartados.\n");
+        if ((virtual->cabeza + 1) % tamanioBuffer == virtual->cola) {
+            printf("El bufer esta lleno. Datos descartados.\n");
             return;
         }
-        device->buffer[device->head] = data[i];
-        device->head = (device->head + 1) % BUFFER_SIZE;
+        virtual->buffer[virtual->cabeza] = data[i];
+        virtual->cabeza = (virtual->cabeza + 1) % tamanioBuffer;
     }
     printf("Datos recibidos: %s\n", data);
 }
 
-void readData(VirtualDevice *device) {
-    if (!device->isConnected) {
-        printf("El dispositivo no está conectado.\n");
+void leerData(Virtual *virtual) {
+    if (!virtual->estaConectado) {
+        printf("El dispositivo no esta conectado.\n");
         return;
     }
 
-    if (device->head == device->tail) {
-        printf("El búfer está vacío. No hay datos para leer.\n");
+    if (virtual->cabeza == virtual->cola) {
+        printf("El bufer esta vacio. No hay datos para leer.\n");
         return;
     }
 
-    printf("Datos leídos: ");
-    while (device->head != device->tail) {
-        printf("%c", device->buffer[device->tail]);
-        device->tail = (device->tail + 1) % BUFFER_SIZE;
+    printf("Datos leidos: ");
+    while (virtual->cabeza != virtual->cola) {
+        printf("%c", virtual->buffer[virtual->cola]);
+        virtual->cola = (virtual->cola + 1) % tamanioBuffer;
     }
     printf("\n");
 }
 
-void disconnectDevice(VirtualDevice *device) {
-    device->isConnected = 0;
+void desconectar(Virtual *virtual) {
+    virtual->estaConectado = 0;
     printf("Dispositivo desconectado.\n");
 }
 
-void connectDevice(VirtualDevice *device) {
-    device->isConnected = 1;
+void conectar(Virtual *virtual) {
+    virtual->estaConectado = 1;
     printf("Dispositivo conectado.\n");
 }
 
 int main() {
-    VirtualDevice device;
-    initializeDevice(&device);
+    Virtual virtual;
+    inicializar(&virtual);
 
     int opcion;
-    char inputData[BUFFER_SIZE];
+    char inputData[tamanioBuffer];
 
     while (1) {
         printf("\n--- Manejador de Dispositivos ---\n");
@@ -692,28 +698,28 @@ int main() {
         printf("3. Conectar dispositivo\n");
         printf("4. Desconectar dispositivo\n");
         printf("5. Salir\n");
-        printf("Seleccione una opción: ");
+        printf("Seleccione una opcion: ");
         scanf("%d", &opcion);
         getchar();
 
         switch (opcion) {
             case 1:
-                printf("Ingrese los datos a recibir: ");
-                fgets(inputData, BUFFER_SIZE, stdin);
+                printf("Ingrese los datos: ");
+                fgets(inputData, tamanioBuffer, stdin);
                 inputData[strcspn(inputData, "\n")] = '\0';
-                receiveData(&device, inputData);
+                recibirData(&virtual, inputData);
                 break;
 
             case 2:
-                readData(&device);
+                leerData(&virtual);
                 break;
 
             case 3:
-                connectDevice(&device);
+                conectar(&virtual);
                 break;
 
             case 4:
-                disconnectDevice(&device);
+                desconectar(&virtual);
                 break;
 
             case 5:
@@ -721,7 +727,7 @@ int main() {
                 exit(0);
 
             default:
-                printf("Opción no válida. Intente de nuevo.\n");
+                printf("Opcion no valida. Intente de nuevo.\n");
         }
     }
 
@@ -740,7 +746,9 @@ Una **interrupción** viene determinada por la ocurrencia de una señal externa 
 
 <!-- PONER UN PSEUDOCODIGOOOO-->
 
-2. `Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación.`
+2. Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación.
+
+<!-- CODIGO 7 -->
 
 ```c
 
@@ -749,21 +757,21 @@ Una **interrupción** viene determinada por la ocurrencia de una señal externa 
 #include <signal.h>
 #include <unistd.h>
 
-volatile sig_atomic_t interruptFlag = 0;
+volatile sig_atomic_t interrupcion = 0;
 
 void handleInterrupt(int signal) {
     if (signal == SIGINT) {
-        printf("\nInterrupción recibida: SIGINT (Ctrl+C)\n");
-        interruptFlag = 1;
+        printf("\nInterrupcion recibida: SIGINT (Ctrl+C)\n");
+        interrupcion = 1;
     } else if (signal == SIGUSR1) {
-        printf("\nInterrupción recibida: SIGUSR1 (personalizada)\n");
+        printf("\nInterrupcion recibida: SIGUSR1 (personalizada)\n");
     }
 }
 
-void simulateTask() {
+void simuladorTask() {
     printf("Simulando tarea... Presiona Ctrl+C para interrumpir.\n");
     for (int i = 0; i < 10; i++) {
-        if (interruptFlag) {
+        if (interrupcion) {
             printf("Tarea interrumpida por SIGINT. Guardando estado y finalizando.\n");
             return;
         }
@@ -778,19 +786,19 @@ int main() {
     signal(SIGUSR1, handleInterrupt);
 
     while (1) {
-        printf("\n--- Sistema Básico de Simulación ---\n");
+        printf("\n--- Sistema Basico de Simulacion ---\n");
         printf("1. Ejecutar tarea\n");
-        printf("2. Enviar señal SIGUSR1\n");
+        printf("2. Enviar signal SIGUSR1\n");
         printf("3. Salir\n");
-        printf("Seleccione una opción: ");
+        printf("Seleccione una opcion: ");
 
         int opcion;
         scanf("%d", &opcion);
 
         switch (opcion) {
             case 1:
-                interruptFlag = 0;
-                simulateTask();
+                interrupcion = 0;
+                simuladorTask();
                 break;
             case 2:
                 raise(SIGUSR1);
@@ -799,13 +807,12 @@ int main() {
                 printf("Saliendo del programa.\n");
                 exit(0);
             default:
-                printf("Opción no válida. Intente de nuevo.\n");
+                printf("Opcion no valida. Intente de nuevo.\n");
         }
     }
 
     return 0;
 }
-
 
 ```
 
@@ -826,7 +833,9 @@ int main(){
 ```
 
 
-2. `Escribe un programa que simule las operaciones de un manejo de dispositivos utilizando una tabla de estructuras.`
+2. Escribe un programa que simule las operaciones de un manejo de dispositivos utilizando una tabla de estructuras. ✔️
+
+<!-- CODIGO 8 TERMINADO -->
 
 ```c
 
@@ -834,125 +843,125 @@ int main(){
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_DEVICES 5
+#define dispositivosMax 5
 
 typedef struct {
     int id;                     
-    char name[20];
-    int isConnected; 
+    char nombre[20];
+    int estaConectado; 
     void (*read)(int id);  
     void (*write)(int id); 
-} Device;
+} Dispositivo;
 
-void readDevice(int id) {
+void leerDispositivo(int id) {
     printf("Leyendo datos del dispositivo %d...\n", id);
-    printf("Datos leídos: 'Hola desde el dispositivo %d'.\n", id);
+    printf("Datos leidos: 'Hola desde el dispositivo %d'.\n", id);
 }
 
-void writeDevice(int id) {
+void escribirDispositivo(int id) {
     printf("Escribiendo datos al dispositivo %d...\n", id);
     printf("Datos escritos: 'Mensaje enviado al dispositivo %d'.\n", id);
 }
 
-void connectDevice(Device* device) {
-    if (device->isConnected) {
-        printf("El dispositivo %d ya está conectado.\n", device->id);
+void conectar(Dispositivo* dispositivo) {
+    if (dispositivo->estaConectado) {
+        printf("El dispositivo %d ya esta conectado.\n", dispositivo->id);
     } else {
-        device->isConnected = 1;
-        printf("El dispositivo %d ha sido conectado.\n", device->id);
+        dispositivo->estaConectado = 1;
+        printf("El dispositivo %d ha sido conectado.\n", dispositivo->id);
     }
 }
 
-void disconnectDevice(Device* device) {
-    if (!device->isConnected) {
-        printf("El dispositivo %d ya está desconectado.\n", device->id);
+void desconectar(Dispositivo* dispositivo) {
+    if (!dispositivo->estaConectado) {
+        printf("El dispositivo %d ya esta desconectado.\n", dispositivo->id);
     } else {
-        device->isConnected = 0;
-        printf("El dispositivo %d ha sido desconectado.\n", device->id);
+        dispositivo->estaConectado = 0;
+        printf("El dispositivo %d ha sido desconectado.\n", dispositivo->id);
     }
 }
 
-void showDeviceStatus(Device devices[], int numDevices) {
+void mostrarStatus(Dispositivo dispositivos[], int numDispositivos) {
     printf("\nEstado de los dispositivos:\n");
-    for (int i = 0; i < numDevices; i++) {
-        printf("Dispositivo %d (%s): %s\n", devices[i].id, devices[i].name,
-               devices[i].isConnected ? "Conectado" : "Desconectado");
+    for (int i = 0; i < numDispositivos; i++) {
+        printf("Dispositivo %d (%s): %s\n", dispositivos[i].id, dispositivos[i].nombre,
+               dispositivos[i].estaConectado ? "Conectado" : "Desconectado");
     }
 }
 
 int main() {
-    Device devices[MAX_DEVICES] = {
-        {1, "Dispositivo A", 0, readDevice, writeDevice},
-        {2, "Dispositivo B", 0, readDevice, writeDevice},
-        {3, "Dispositivo C", 0, readDevice, writeDevice},
-        {4, "Dispositivo D", 0, readDevice, writeDevice},
-        {5, "Dispositivo E", 0, readDevice, writeDevice}
+    Dispositivo dispositivos[dispositivosMax] = {
+        {1, "Dispositivo A", 0, leerDispositivo, escribirDispositivo},
+        {2, "Dispositivo B", 0, leerDispositivo, escribirDispositivo},
+        {3, "Dispositivo C", 0, leerDispositivo, escribirDispositivo},
+        {4, "Dispositivo D", 0, leerDispositivo, escribirDispositivo},
+        {5, "Dispositivo E", 0, leerDispositivo, escribirDispositivo}
     };
 
-    int opcion, deviceId;
+    int opcion, dispositivoId;
 
     while (1) {
-        printf("\n--- Menú de Manejo de Dispositivos ---\n");
+        printf("\n--- Menu de Manejo de Dispositivos ---\n");
         printf("1. Conectar dispositivo\n");
         printf("2. Desconectar dispositivo\n");
         printf("3. Leer datos de un dispositivo\n");
         printf("4. Escribir datos en un dispositivo\n");
         printf("5. Ver estado de todos los dispositivos\n");
         printf("6. Salir\n");
-        printf("Seleccione una opción: ");
+        printf("Seleccione una opcion: ");
         scanf("%d", &opcion);
 
         switch (opcion) {
             case 1:
                 printf("Ingrese el ID del dispositivo a conectar (1-5): ");
-                scanf("%d", &deviceId);
-                if (deviceId >= 1 && deviceId <= 5) {
-                    connectDevice(&devices[deviceId - 1]);
+                scanf("%d", &dispositivoId);
+                if (dispositivoId >= 1 && dispositivoId <= 5) {
+                    conectar(&dispositivos[dispositivoId - 1]);
                 } else {
-                    printf("ID de dispositivo no válido.\n");
+                    printf("ID de dispositivo no valido.\n");
                 }
                 break;
 
             case 2:
                 printf("Ingrese el ID del dispositivo a desconectar (1-5): ");
-                scanf("%d", &deviceId);
-                if (deviceId >= 1 && deviceId <= 5) {
-                    disconnectDevice(&devices[deviceId - 1]);
+                scanf("%d", &dispositivoId);
+                if (dispositivoId >= 1 && dispositivoId <= 5) {
+                    desconectar(&dispositivos[dispositivoId - 1]);
                 } else {
-                    printf("ID de dispositivo no válido.\n");
+                    printf("ID de dispositivo no valido.\n");
                 }
                 break;
 
             case 3:
                 printf("Ingrese el ID del dispositivo para leer datos (1-5): ");
-                scanf("%d", &deviceId);
-                if (deviceId >= 1 && deviceId <= 5) {
-                    if (devices[deviceId - 1].isConnected) {
-                        devices[deviceId - 1].read(deviceId);
+                scanf("%d", &dispositivoId);
+                if (dispositivoId >= 1 && dispositivoId <= 5) {
+                    if (dispositivos[dispositivoId - 1].estaConectado) {
+                        dispositivos[dispositivoId - 1].read(dispositivoId);
                     } else {
-                        printf("El dispositivo %d no está conectado.\n", deviceId);
+                        printf("El dispositivo %d no esta conectado.\n", dispositivoId);
                     }
                 } else {
-                    printf("ID de dispositivo no válido.\n");
+                    printf("ID de dispositivo no valido.\n");
                 }
                 break;
 
             case 4:
                 printf("Ingrese el ID del dispositivo para escribir datos (1-5): ");
-                scanf("%d", &deviceId);
-                if (deviceId >= 1 && deviceId <= 5) {
-                    if (devices[deviceId - 1].isConnected) {
-                        devices[deviceId - 1].write(deviceId);
+                scanf("%d", &dispositivoId);
+                if (dispositivoId >= 1 && dispositivoId <= 5) {
+                    if (dispositivos[dispositivoId - 1].estaConectado) {
+                        dispositivos[dispositivoId - 1].write(dispositivoId);
                     } else {
-                        printf("El dispositivo %d no está conectado.\n", deviceId);
+                        printf("El dispositivo %d no esta conectado.\n", dispositivoId);
                     }
                 } else {
-                    printf("ID de dispositivo no válido.\n");
+                    printf("ID de dispositivo no valido.\n");
                 }
                 break;
 
             case 5:
-                showDeviceStatus(devices, MAX_DEVICES);
+                mostrarStatus(dispositivos, dispositivosMax);
                 break;
 
             case 6:
@@ -960,13 +969,12 @@ int main() {
                 exit(0);
 
             default:
-                printf("Opción no válida. Intente de nuevo.\n");
+                printf("Opción no valida. Intente de nuevo.\n");
         }
     }
 
     return 0;
 }
-
 
 ```
 
@@ -992,8 +1000,6 @@ uuuuuu
 
 ### Avanzados
 
-1. `Explica cómo los sistemas operativos modernos optimizan las operaciones de entrada/salida con el uso de la memoria caché.`
+1. Explica cómo los sistemas operativos modernos optimizan las operaciones de entrada/salida con el uso de la memoria caché. ✔️
 
-uuuuuu
-
-
+Los **sistemas operativos** modernos optimizan sus operaciones de E/S usando el manejo de memoria, especialmente a través de la **memoria caché**. La memoria caché es un acceso rápido de datos que se usa para un almacenamiento temporal, siendo estos datos los que se acceden con mayor frecuencia y/o que se prevee que así será. Al optimizar las operaciones de E/S con esta memoria, los sistemas mejoran su rendimiento y reduciendo los tiempos de espera.
