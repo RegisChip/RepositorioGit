@@ -458,13 +458,32 @@ int main() {
 
 2. `Diseña un diagrama que represente el proceso de traducción de direcciones virtuales a físicas en un sistema con memoria virtual.`
 
-uuuuuu
 
 ### Integración
 
-1. `Analiza un sistema operativo moderno (por ejemplo, Linux o Windows) e identifica cómo administra la memoria virtual.`
+1. Analiza un sistema operativo moderno (por ejemplo, Linux o Windows) e identifica cómo administra la memoria virtual. ✔️
 
-uuuuuu
+**Linux** usa un enfoque más flexible y optimizado para muchos dispositivos.
+
+* **Paginación** generalmente usa paginas de 4KB, aunque admite páginas de 2 MB o incluso mayores para aplicaciones de alto rendimiento.
+
+* **Espacio de direcciones** Cada proceso tiene su propio espacio de direcciones virtuales de 4 GB (en sistemas de 32 bits) o mayor (en sistemas de 64 bits).
+
+* **Swapping** Cuando la memoria física es insuficiente, Linux puede mover páginas de memoria al área de intercambio en el disco.
+
+* **Cachés y Buffers**La memoria no usada por aplicaciones se utiliza como caché para datos del disco y buffers de escritura, lo que mejora el rendimiento de E/S.
+
+
+**Windows** a pesar de tener un modelo de memoria virtual más robusco y fácil de usar,  tiene caracteristicas algo similares.
+
+* **Paginación** Utiliza un tamaño de página predeterminado de 4 KB, aunque también soporta páginas grandes para aplicaciones críticas.
+
+* **Espacio de direcciones** Cada proceso tiene un espacio de direcciones virtuales independiente, con 2 GB reservados para el proceso y 2 GB para el kernel en sistemas de 32 bits (configuración predeterminada). En sistemas de 64 bits, el espacio puede ser mucho mayor.
+
+* **Archivo de paginación** Windows utiliza un archivo de paginación para almacenar páginas que no caben en la memoria física.
+
+* **Caché** Windows utiliza memoria no asignada como caché de disco para acelerar las operaciones de E/S.
+
 
 2. Realiza una simulación en cualquier lenguaje de programación que emule el swapping de procesos en memoria virtual. ✔️
 
@@ -823,7 +842,7 @@ int main() {
 
 Una **cola de entrada/salida (E/S)** es una estructura de datos utilizada para gestionar las solicitudes de entrada y salida de datos entre el sistema y los dispositivos periféricos. Es una cola (generalmente *FIFO*) en la que se almacenan las solicitudes de E/S a medida que se generan. Las solicitudes se procesan en el orden en que llegan.
 
-<!-- HACER UNA SIMULACION -->
+<!-- CODIGO 8 -->
 ```c
 
 int main(){
@@ -835,7 +854,7 @@ int main(){
 
 2. Escribe un programa que simule las operaciones de un manejo de dispositivos utilizando una tabla de estructuras. ✔️
 
-<!-- CODIGO 8 TERMINADO -->
+<!-- CODIGO 9 TERMINADO -->
 
 ```c
 
@@ -982,21 +1001,112 @@ int main() {
 
 1. `Diseña un flujo que describa el proceso de lectura de un archivo desde un disco magnético. Acompáñalo con un programa básico que simule el proceso.`
 
-uuuuuu
+<!-- CODIGO 10 -->
 
-2. `Implementa un programa en Python, C o java que realice operaciones de entrada/salida asíncronas usando archivos.`
+```c
 
-uuuuuu
+```
+
+2. Implementa un programa en Python, C o java que realice operaciones de entrada/salida asíncronas usando archivos. ✔️
+
+<!-- CODIGO 11 TERMINADO -->
+
+```java
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousFileChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.concurrent.Future;
+
+/**
+ *
+ * @author regina
+ */
+public class Index_11{
+
+    public static void main(String[] args) {
+        
+        String archivoNom = "Index_11/ejemplo.txt";
+        Path archivoPath = Paths.get(archivoNom);
+
+        String escribir = "Hola mundo";
+
+        try {
+            if (!Files.exists(archivoPath)) {
+                Files.createFile(archivoPath);
+                System.out.println("Archivo creado: " + archivoNom);
+            }
+        } catch (IOException e) {
+            System.out.println("Error al crear el archivo: " + e.getMessage());
+            return;
+        }
+
+        try (AsynchronousFileChannel canalEscritura = AsynchronousFileChannel.open(
+                archivoPath, StandardOpenOption.WRITE)) {
+
+            ByteBuffer bufferEscritura = ByteBuffer.wrap(escribir.getBytes());
+            Future<Integer> resultadoEscritura = canalEscritura.write(bufferEscritura, 0);
+
+            System.out.println("Iniciando escritura de manera asincrona...");
+            while (!resultadoEscritura.isDone()) {
+                System.out.println("Escritura en proceso...");
+                Thread.sleep(300);
+            }
+            System.out.println("Escritura completada exitosamente.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        try (AsynchronousFileChannel canalLectura = AsynchronousFileChannel.open(
+                archivoPath, StandardOpenOption.READ)) {
+
+            ByteBuffer bufferLectura = ByteBuffer.allocate(1024);
+            Future<Integer> resultadoLectura = canalLectura.read(bufferLectura, 0);
+
+            System.out.println("Iniciando lectura de manera asincrona...");
+            while (!resultadoLectura.isDone()) {
+                System.out.println("Lectura en proceso...");
+                Thread.sleep(300);
+            }
+
+            bufferLectura.flip();
+            byte[] datosLeidos = new byte[bufferLectura.remaining()];
+            bufferLectura.get(datosLeidos);
+            System.out.println("Lectura completada:");
+            System.out.println(new String(datosLeidos));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+```
 
 ### Integración
 
 1. `Escribe un programa que implemente el algoritmo de planificación de discos "Elevator (SCAN)".`
 
-uuuuuu
+<!-- CODIGO 12 -->
+
+```c
+
+```
 
 2. `Diseña un sistema que maneje múltiples dispositivos simulados (disco duro, impresora, teclado) y muestra cómo se realiza la comunicación entre ellos.`
 
-uuuuuu
+<!-- CODIGO 13 -->
+
+```c
+
+```
 
 ### Avanzados
 
