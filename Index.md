@@ -456,8 +456,9 @@ int main() {
 ```
 
 
-2. `Diseña un diagrama que represente el proceso de traducción de direcciones virtuales a físicas en un sistema con memoria virtual.`
+2. `Diseña un diagrama que represente el proceso de traducción de direcciones virtuales a físicas en un sistema con memoria virtual.` #
 
+ ![ Alt Text][def]
 
 ### Integración
 
@@ -758,12 +759,53 @@ int main() {
 
 ### 4.2 Mecanismos y funciones de los manejadores de dispositivos
 
-1. Investiga qué es la interrupción por E/S y cómo la administra el sistema operativo. Escribe un ejemplo en pseudocódigo para simular este proceso.
+1. Investiga qué es la interrupción por E/S y cómo la administra el sistema operativo. Escribe un ejemplo en pseudocódigo para simular este proceso. ✔️
 
 Una **interrupción** viene determinada por la ocurrencia de una señal externa que provoca la bifurcación a una dirección especifica de memoria, interrumpiendo temporalmente la ejecución del programa principal. Así que, una **interrupción por entrada y salida (E/S)** es un mecanismo que altera el orden de ejecución de instrucciones en respuesta a un evento externo. Este evento es generado por el *hardware* de entrada y salida de manera asincrónica, es decir, fuera del control del programa que se está ejecutando
 
-
 <!-- PONER UN PSEUDOCODIGOOOO-->
+
+```
+
+Mientras sistema esta corrinedo Hacer
+    Ejecutar Proceso Actual
+    Si hay Interrupciones
+        Llamar a Manejar Interrupciones
+    Fin de Si
+Fin
+
+Manejar Interrupciones
+    Terminar Interrupciones
+    Encontrar origen de la Interrupcion
+    Segun Tipo Interrupcion Hacer
+        Caso Dispositivo de E/S:
+            Llamar a Manejar Dispositivos
+        Caso Temporizador:
+            Actual tiempo de CPU
+        Caso Error:
+            Registrar Error
+        Otro
+            Ignorar Interrupcion
+    Fin de Segun
+
+    Empezar Interrupcion
+    Reaunudar Proceso
+Fin
+
+Manejar Dispositivos
+    Leer Datos por Dispositivo
+    Si El Proceso esperado Existe
+        Actualizar Estado del Proceso a Listo
+    Fin de Si
+    Actualizar Cola de Proceso
+Fin
+
+Ejecutar Proceso Actual
+    Seleccionar Proceso con Mayor Prioridad
+Fin
+
+
+```
 
 2. Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación.
 
@@ -838,14 +880,139 @@ int main() {
 
 ### 4.3 Estructura de datos para manejo de dispositivos
 
-1. Investiga y explica qué es una cola E/S. Diseña una simulación de una cola con prioridad.
+1. Investiga y explica qué es una cola E/S. Diseña una simulación de una cola con prioridad. ✔️
 
 Una **cola de entrada/salida (E/S)** es una estructura de datos utilizada para gestionar las solicitudes de entrada y salida de datos entre el sistema y los dispositivos periféricos. Es una cola (generalmente *FIFO*) en la que se almacenan las solicitudes de E/S a medida que se generan. Las solicitudes se procesan en el orden en que llegan.
 
-<!-- CODIGO 8 -->
+<!-- CODIGO 8 TERMINADO -->
+
 ```c
 
-int main(){
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Peticion {
+    int prioridad;
+    char tipo[50];
+    int timestamp;
+    struct Peticion *siguiente;
+} Peticion;
+
+typedef struct {
+    Peticion *frente;
+} ColaDePrioridad;
+
+int tiempoActual = 0;
+
+Peticion *crearPeticion(char *tipo, int prioridad) {
+    Peticion *nueva = (Peticion *)malloc(sizeof(Peticion));
+    strcpy(nueva->tipo, tipo);
+    nueva->prioridad = prioridad;
+    nueva->timestamp = tiempoActual++;
+    nueva->siguiente = NULL;
+    return nueva;
+}
+
+void insertarEnCola(ColaDePrioridad *cola, Peticion *nueva) {
+    if (!cola->frente || 
+        nueva->prioridad > cola->frente->prioridad || 
+        (nueva->prioridad == cola->frente->prioridad && nueva->timestamp < cola->frente->timestamp)) {
+        nueva->siguiente = cola->frente;
+        cola->frente = nueva;
+    } else {
+        Peticion *actual = cola->frente;
+        while (actual->siguiente && 
+               (actual->siguiente->prioridad > nueva->prioridad || 
+               (actual->siguiente->prioridad == nueva->prioridad && actual->siguiente->timestamp <= nueva->timestamp))) {
+            actual = actual->siguiente;
+        }
+        nueva->siguiente = actual->siguiente;
+        actual->siguiente = nueva;
+    }
+}
+
+void procesarPeticion(ColaDePrioridad *cola) {
+    if (!cola->frente) {
+        printf("No hay peticiones para procesar.\n");
+        return;
+    }
+    Peticion *procesada = cola->frente;
+    printf("Procesando peticion: Tipo='%s', Prioridad=%d, Timestamp=%d\n",
+           procesada->tipo, procesada->prioridad, procesada->timestamp);
+    cola->frente = procesada->siguiente;
+    free(procesada);
+}
+
+void imprimirCola(ColaDePrioridad *cola) {
+    if (!cola->frente) {
+        printf("La cola esta vacia.\n");
+        return;
+    }
+    Peticion *actual = cola->frente;
+    printf("Cola actual:\n");
+    while (actual) {
+        printf("  Tipo='%s', Prioridad=%d, Timestamp=%d\n",
+               actual->tipo, actual->prioridad, actual->timestamp);
+        actual = actual->siguiente;
+    }
+}
+
+void menu() {
+    printf("\n Gestión de Interrupciones :\n");
+    printf("1. Agregar nueva peticion\n");
+    printf("2. Procesar peticion mas prioritaria\n");
+    printf("3. Ver cola de peticiones\n");
+    printf("4. Salir\n");
+    printf("Seleccione una opcion: ");
+}
+
+int main() {
+    ColaDePrioridad cola = {NULL};
+    int opcion;
+
+    do {
+        menu();
+        scanf("%d", &opcion);
+        getchar();
+
+        switch (opcion) {
+            case 1: {
+                char tipo[50];
+                int prioridad;
+                printf("Ingrese el tipo de interrupción: ");
+                fgets(tipo, sizeof(tipo), stdin);
+                tipo[strcspn(tipo, "\n")] = 0;
+                printf("Ingrese la prioridad (1-10): ");
+                scanf("%d", &prioridad);
+
+                if (prioridad < 1 || prioridad > 10) {
+                    printf("Prioridad inválida. Intente de nuevo.\n");
+                } else {
+                    Peticion *nueva = crearPeticion(tipo, prioridad);
+                    insertarEnCola(&cola, nueva);
+                    printf("Peticion agregada: Tipo='%s', Prioridad=%d\n", tipo, prioridad);
+                }
+                break;
+            }
+            case 2:
+                procesarPeticion(&cola);
+                break;
+            case 3:
+                imprimirCola(&cola);
+                break;
+            case 4:
+                printf("Saliendo del sistema...\n");
+                break;
+            default:
+                printf("Opcion invalida.\n");
+        }
+    } while (opcion != 4);
+
+    while (cola.frente) {
+        procesarPeticion(&cola);
+    }
+
     return 0;
 }
 
@@ -909,6 +1076,7 @@ void mostrarStatus(Dispositivo dispositivos[], int numDispositivos) {
 }
 
 int main() {
+    
     Dispositivo dispositivos[dispositivosMax] = {
         {1, "Dispositivo A", 0, leerDispositivo, escribirDispositivo},
         {2, "Dispositivo B", 0, leerDispositivo, escribirDispositivo},
@@ -1113,3 +1281,5 @@ public class Index_11{
 1. Explica cómo los sistemas operativos modernos optimizan las operaciones de entrada/salida con el uso de la memoria caché. ✔️
 
 Los **sistemas operativos** modernos optimizan sus operaciones de E/S usando el manejo de memoria, especialmente a través de la **memoria caché**. La memoria caché es un acceso rápido de datos que se usa para un almacenamiento temporal, siendo estos datos los que se acceden con mayor frecuencia y/o que se prevee que así será. Al optimizar las operaciones de E/S con esta memoria, los sistemas mejoran su rendimiento y reduciendo los tiempos de espera.
+
+[def]: URL
