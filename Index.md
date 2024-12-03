@@ -819,63 +819,63 @@ Fin
 #include <string.h>
 #include <unistd.h>
 
-#define MAX_INTERRUPTS 10
+#define interMaximas 10
 
 typedef struct {
     char tipo[20];
     void (*handler)(void *args);
-} Interrupt;
+} Interrupcion;
 
 typedef struct {
-    Interrupt interrupts[MAX_INTERRUPTS];
-    int count;
-} InterruptHandler;
+    Interrupcion interrupcion[interMaximas];
+    int contador;
+} InterControlador;
 
-void register_interrupt(InterruptHandler *ih, const char *tipo, void (*handler)(void *)) {
-    if (ih->count < MAX_INTERRUPTS) {
-        strcpy(ih->interrupts[ih->count].tipo, tipo);
-        ih->interrupts[ih->count].handler = handler;
-        ih->count++;
+void registrar_inter(InterControlador *ic, const char *tipo, void (*handler)(void *)) {
+    if (ic->contador < interMaximas) {
+        strcpy(ic->interrupcion[ic->contador].tipo, tipo);
+        ic->interrupcion[ic->contador].handler = handler;
+        ic->contador++;
     } else {
         printf("No se pueden registrar mas interrupciones.\n");
     }
 }
 
-void handle_interrupt(InterruptHandler *ih, const char *tipo, void *args) {
-    for (int i = 0; i < ih->count; i++) {
-        if (strcmp(ih->interrupts[i].tipo, tipo) == 0) {
+void controlar_inter(InterControlador *ic, const char *tipo, void *args) {
+    for (int i = 0; i < ic->contador; i++) {
+        if (strcmp(ic->interrupcion[i].tipo, tipo) == 0) {
             printf("Interrupcion detectada: %s\n", tipo);
-            ih->interrupts[i].handler(args);
+            ic->interrupcion[i].handler(args);
             return;
         }
     }
     printf("Interrupcion no manejada: %s\n", tipo);
 }
 
-void keyboard_interrupt(void *args) {
+void teclado_inter(void *args) {
     char *key = (char *)args;
     printf("Se presiono la tecla: %s\n", key);
 }
 
-void timer_interrupt(void *args) {
+void timer_inter(void *args) {
     printf("Temporizador activado.\n");
 }
 
 int main() {
-    InterruptHandler ih = {.count = 0};
+    InterControlador ic = {.contador = 0};
 
-    register_interrupt(&ih, "keyboard", keyboard_interrupt);
-    register_interrupt(&ih, "timer", timer_interrupt);
+    registrar_inter(&ic, "teclado", teclado_inter);
+    registrar_inter(&ic, "timer", timer_inter);
 
     char input[10];
-    int timer_counter = 0;
+    int timer_contador = 0;
 
     printf("Simulacion de manejo de interrupciones.\n");
     printf("Presiona teclas (q para salir) o espera al temporizador.\n");
 
     while (1) {
-        if (timer_counter == 0) {
-            handle_interrupt(&ih, "timer", NULL);
+        if (timer_contador == 0) {
+            controlar_inter(&ic, "timer", NULL);
         }
 
         printf("Entrada: ");
@@ -884,11 +884,11 @@ int main() {
             if (strcmp(input, "q") == 0) {
                 break;
             }
-            handle_interrupt(&ih, "keyboard", input);
+            controlar_inter(&ic, "teclado", input);
         }
 
         sleep(1);
-        timer_counter = (timer_counter + 1) % 5;
+        timer_contador = (timer_contador + 1) % 5;
     }
 
     printf("Finalizando simulacion.\n");
