@@ -455,10 +455,11 @@ int main() {
 
 ```
 
+2. Diseña un diagrama que represente el proceso de traducción de direcciones virtuales a físicas en un sistema con memoria virtual. ✔️
 
-2. `Diseña un diagrama que represente el proceso de traducción de direcciones virtuales a físicas en un sistema con memoria virtual.` #
 
- ![ Alt Text][def]
+![Direccion Virtual a Física](MemoriaVirtual.png)
+
 
 ### Integración
 
@@ -807,73 +808,94 @@ Fin
 
 ```
 
-2. Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación.
+2. Escribe un programa que utilice el manejo de interrupciones en un sistema básico de simulación. ✔️
 
-<!-- CODIGO 7 -->
+<!-- CODIGO 7 TERMINADO -->
 
 ```c
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
+#include <string.h>
 #include <unistd.h>
 
-volatile sig_atomic_t interrupcion = 0;
+#define MAX_INTERRUPTS 10
 
-void handleInterrupt(int signal) {
-    if (signal == SIGINT) {
-        printf("\nInterrupcion recibida: SIGINT (Ctrl+C)\n");
-        interrupcion = 1;
-    } else if (signal == SIGUSR1) {
-        printf("\nInterrupcion recibida: SIGUSR1 (personalizada)\n");
+typedef struct {
+    char tipo[20];
+    void (*handler)(void *args);
+} Interrupt;
+
+typedef struct {
+    Interrupt interrupts[MAX_INTERRUPTS];
+    int count;
+} InterruptHandler;
+
+void register_interrupt(InterruptHandler *ih, const char *tipo, void (*handler)(void *)) {
+    if (ih->count < MAX_INTERRUPTS) {
+        strcpy(ih->interrupts[ih->count].tipo, tipo);
+        ih->interrupts[ih->count].handler = handler;
+        ih->count++;
+    } else {
+        printf("No se pueden registrar mas interrupciones.\n");
     }
 }
 
-void simuladorTask() {
-    printf("Simulando tarea... Presiona Ctrl+C para interrumpir.\n");
-    for (int i = 0; i < 10; i++) {
-        if (interrupcion) {
-            printf("Tarea interrumpida por SIGINT. Guardando estado y finalizando.\n");
+void handle_interrupt(InterruptHandler *ih, const char *tipo, void *args) {
+    for (int i = 0; i < ih->count; i++) {
+        if (strcmp(ih->interrupts[i].tipo, tipo) == 0) {
+            printf("Interrupcion detectada: %s\n", tipo);
+            ih->interrupts[i].handler(args);
             return;
         }
-        printf("Ejecutando paso %d...\n", i + 1);
-        sleep(1);
     }
-    printf("Tarea completada exitosamente.\n");
+    printf("Interrupcion no manejada: %s\n", tipo);
+}
+
+void keyboard_interrupt(void *args) {
+    char *key = (char *)args;
+    printf("Se presiono la tecla: %s\n", key);
+}
+
+void timer_interrupt(void *args) {
+    printf("Temporizador activado.\n");
 }
 
 int main() {
-    signal(SIGINT, handleInterrupt);
-    signal(SIGUSR1, handleInterrupt);
+    InterruptHandler ih = {.count = 0};
+
+    register_interrupt(&ih, "keyboard", keyboard_interrupt);
+    register_interrupt(&ih, "timer", timer_interrupt);
+
+    char input[10];
+    int timer_counter = 0;
+
+    printf("Simulacion de manejo de interrupciones.\n");
+    printf("Presiona teclas (q para salir) o espera al temporizador.\n");
 
     while (1) {
-        printf("\n--- Sistema Basico de Simulacion ---\n");
-        printf("1. Ejecutar tarea\n");
-        printf("2. Enviar signal SIGUSR1\n");
-        printf("3. Salir\n");
-        printf("Seleccione una opcion: ");
-
-        int opcion;
-        scanf("%d", &opcion);
-
-        switch (opcion) {
-            case 1:
-                interrupcion = 0;
-                simuladorTask();
-                break;
-            case 2:
-                raise(SIGUSR1);
-                break;
-            case 3:
-                printf("Saliendo del programa.\n");
-                exit(0);
-            default:
-                printf("Opcion no valida. Intente de nuevo.\n");
+        if (timer_counter == 0) {
+            handle_interrupt(&ih, "timer", NULL);
         }
+
+        printf("Entrada: ");
+        if (fgets(input, sizeof(input), stdin)) {
+            input[strcspn(input, "\n")] = 0;
+            if (strcmp(input, "q") == 0) {
+                break;
+            }
+            handle_interrupt(&ih, "keyboard", input);
+        }
+
+        sleep(1);
+        timer_counter = (timer_counter + 1) % 5;
     }
+
+    printf("Finalizando simulacion.\n");
 
     return 0;
 }
+
 
 ```
 
@@ -1167,11 +1189,87 @@ int main() {
 
 ### 4.4 Operaciones de Entrada/Salida
 
-1. `Diseña un flujo que describa el proceso de lectura de un archivo desde un disco magnético. Acompáñalo con un programa básico que simule el proceso.`
+1. Diseña un flujo que describa el proceso de lectura de un archivo desde un disco magnético. Acompáñalo con un programa básico que simule el proceso. ✔️
 
-<!-- CODIGO 10 -->
+<!-- CODIGO 10 TERMINADO -->
+
+```
+   +--------------------+
+   |       Inicio       |   Marca el comienzo de la operación de lectura.
+   +--------------------+
+             |
+             v
+   +--------------------+
+   | Ingresar cilindro  |   Se solicita al usuario o sistema el número del cilindro.
+   | objetivo           |
+   +--------------------+
+             |
+             v
+   +--------------------+
+   | Mover cabeza al    |   Simula el movimiento de la cabeza de lectura.
+   | cilindro objetivo  |
+   +--------------------+
+             |
+             v
+   +--------------------+
+   | Esperar sector     |   Simula el retraso rotacional hasta que el sector pase por la cabeza.
+   | correcto (retraso  |
+   | rotacional)        |
+   +--------------------+
+             |
+             v
+   +--------------------+
+   | Transferir datos   |   Los datos del sector son leídos y enviados al buffer.
+   | a memoria          |
+   +--------------------+
+             |
+             v
+   +--------------------+
+   | Notificar éxito    |   Indica que la operación fue completada correctamente.
+   +--------------------+
+             |
+             v
+   +--------------------+
+   |        Fin         |   Termina el proceso.
+   +--------------------+
+
+```
 
 ```c
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void mover_cabeza(int inicio, int destino) {
+    printf("Moviendo cabeza de lectura del cilindro %d al cilindro %d...\n", inicio, destino);
+    printf("Tiempo de busqueda: %d unidades.\n", abs(destino - inicio));
+}
+
+void retraso_rotacional() {
+    printf("Esperando a que el sector este disponible...\n");
+    printf("Retraso rotacional completado.\n");
+}
+
+void transferencia_datos() {
+    printf("Leyendo datos del sector...\n");
+    printf("Transferencia completada.\n");
+}
+
+int main() {
+    int posicion_actual = 50;
+    int posicion_objetivo;
+
+    printf("Simulacion de Lectura de Disco -> \n");
+    printf("Ingrese el cilindro donde se encuentra el archivo: ");
+    scanf("%d", &posicion_objetivo);
+
+    mover_cabeza(posicion_actual, posicion_objetivo);
+    retraso_rotacional();
+    transferencia_datos();
+
+    printf("Archivo leido correctamente.\n");
+    return 0;
+}
 
 ```
 
@@ -1260,19 +1358,234 @@ public class Index_11{
 
 ### Integración
 
-1. `Escribe un programa que implemente el algoritmo de planificación de discos "Elevator (SCAN)".`
+1. Escribe un programa que implemente el algoritmo de planificación de discos "Elevator (SCAN)". ✔️
 
-<!-- CODIGO 12 -->
+<!-- CODIGO 12 TERMINADO -->
 
 ```c
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int comparar(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+void ejecutar_scan(int *solicitudes, int n, int inicio, int direccion, int cilindros) {
+    int i, total_movimiento = 0;
+
+    qsort(solicitudes, n, sizeof(int), comparar);
+
+    printf("Orden de acceso al disco:\n");
+
+    if (direccion == 1) {
+        for (i = 0; i < n; i++) {
+            if (solicitudes[i] >= inicio) {
+                printf("%d ", solicitudes[i]);
+                total_movimiento += abs(inicio - solicitudes[i]);
+                inicio = solicitudes[i];
+            }
+        }
+        if (inicio != cilindros - 1) {
+            total_movimiento += abs(inicio - (cilindros - 1));
+            inicio = cilindros - 1;
+        }
+        for (i = n - 1; i >= 0; i--) {
+            if (solicitudes[i] < inicio) {
+                printf("%d ", solicitudes[i]);
+                total_movimiento += abs(inicio - solicitudes[i]);
+                inicio = solicitudes[i];
+            }
+        }
+    } else {
+        for (i = n - 1; i >= 0; i--) {
+            if (solicitudes[i] <= inicio) {
+                printf("%d ", solicitudes[i]);
+                total_movimiento += abs(inicio - solicitudes[i]);
+                inicio = solicitudes[i];
+            }
+        }
+        if (inicio != 0) {
+            total_movimiento += abs(inicio - 0);
+            inicio = 0;
+        }
+        for (i = 0; i < n; i++) {
+            if (solicitudes[i] > inicio) {
+                printf("%d ", solicitudes[i]);
+                total_movimiento += abs(inicio - solicitudes[i]);
+                inicio = solicitudes[i];
+            }
+        }
+    }
+
+    printf("\nTotal de movimiento de cilindros: %d\n", total_movimiento);
+}
+
+void ingresar_solicitudes(int **solicitudes, int *n) {
+    printf("Ingrese el numero de solicitudes: ");
+    scanf("%d", n);
+
+    *solicitudes = malloc((*n) * sizeof(int));
+    if (*solicitudes == NULL) {
+        perror("Error al asignar memoria.");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Ingrese las solicitudes de cilindros:\n");
+    for (int i = 0; i < *n; i++) {
+        printf("Solicitud %d: ", i + 1);
+        scanf("%d", &(*solicitudes)[i]);
+    }
+}
+
+int main() {
+    int *solicitudes;
+    int n, inicio, direccion, cilindros;
+
+    printf("Simulacion del Algoritmo SCAN -> \n");
+    ingresar_solicitudes(&solicitudes, &n);
+
+    printf("Ingrese la posicion inicial de la cabeza: ");
+    scanf("%d", &inicio);
+
+    printf("Ingrese la direccion inicial (1 para ascendente, 0 para descendente): ");
+    scanf("%d", &direccion);
+
+    printf("Ingrese el numero total de cilindros: ");
+    scanf("%d", &cilindros);
+
+    printf("\nPosicion inicial de la cabeza: %d\n", inicio);
+    printf("Direccion inicial: %s\n", (direccion == 1) ? "Ascendente" : "Descendente");
+
+    ejecutar_scan(solicitudes, n, inicio, direccion, cilindros);
+
+    free(solicitudes);
+    return 0;
+}
 
 ```
 
-2. `Diseña un sistema que maneje múltiples dispositivos simulados (disco duro, impresora, teclado) y muestra cómo se realiza la comunicación entre ellos.`
+2. Diseña un sistema que maneje múltiples dispositivos simulados (disco duro, impresora, teclado) y muestra cómo se realiza la comunicación entre ellos. ✔️
 
-<!-- CODIGO 13 -->
+<!-- CODIGO 13 TETRMINADO -->
 
 ```c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Dispositivo {
+    char nombre[20];
+    void (*operacion)(const char *mensaje);
+} Dispositivo;
+
+void operacion_disco(const char *mensaje) {
+    printf("[Disco Duro] Procesando mensaje: %s\n", mensaje);
+}
+
+void operacion_impresora(const char *mensaje) {
+    printf("[Impresora] Imprimiendo: %s\n", mensaje);
+}
+
+void operacion_teclado(const char *mensaje) {
+    printf("[Teclado] Entrada recibida: %s\n", mensaje);
+}
+
+Dispositivo *crear_tabla_dispositivos(int *n) {
+    *n = 3;  
+    Dispositivo *tabla = malloc((*n) * sizeof(Dispositivo));
+
+    strcpy(tabla[0].nombre, "DiscoDuro");
+    tabla[0].operacion = operacion_disco;
+
+    strcpy(tabla[1].nombre, "Impresora");
+    tabla[1].operacion = operacion_impresora;
+
+    strcpy(tabla[2].nombre, "Teclado");
+    tabla[2].operacion = operacion_teclado;
+
+    return tabla;
+}
+
+Dispositivo *buscar_dispositivo(Dispositivo *tabla, int n, const char *nombre) {
+    for (int i = 0; i < n; i++) {
+        if (strcmp(tabla[i].nombre, nombre) == 0) {
+            return &tabla[i];
+        }
+    }
+    return NULL;
+}
+
+void comunicar(Dispositivo *origen, Dispositivo *destino, const char *mensaje) {
+    printf("\n[%s] Enviando mensaje a [%s]: %s\n", origen->nombre, destino->nombre, mensaje);
+    destino->operacion(mensaje);
+}
+
+void mostrar_dispositivos(Dispositivo *tabla, int n) {
+    printf("\nDispositivos disponibles:\n");
+    for (int i = 0; i < n; i++) {
+        printf("  %d. %s\n", i + 1, tabla[i].nombre);
+    }
+}
+
+void menu_interactivo(Dispositivo *tabla, int n) {
+    int opcion_origen, opcion_destino;
+    char mensaje[100];
+
+    while (1) {
+        printf("\nComunicacion entre dispositivos - - - \n");
+        printf("1. Enviar mensaje\n");
+        printf("2. Mostrar dispositivos\n");
+        printf("3. Salir\n");
+        printf("Seleccione una opcion: ");
+        int opcion;
+        scanf("%d", &opcion);
+        getchar();
+
+        switch (opcion) {
+            case 1:
+                mostrar_dispositivos(tabla, n);
+                printf("Seleccione el numero del dispositivo origen: ");
+                scanf("%d", &opcion_origen);
+                getchar();
+
+                printf("Seleccione el numero del dispositivo destino: ");
+                scanf("%d", &opcion_destino);
+                getchar();
+
+                if (opcion_origen < 1 || opcion_origen > n || opcion_destino < 1 || opcion_destino > n) {
+                    printf("Dispositivo invalido. Intente de nuevo.\n");
+                } else {
+                    printf("Ingrese el mensaje: ");
+                    fgets(mensaje, sizeof(mensaje), stdin);
+                    mensaje[strcspn(mensaje, "\n")] = 0;
+                    comunicar(&tabla[opcion_origen - 1], &tabla[opcion_destino - 1], mensaje);
+                }
+                break;
+            case 2:
+                mostrar_dispositivos(tabla, n);
+                break;
+            case 3:
+                printf("Saliendo del programa...\n");
+                return;
+            default:
+                printf("Opción inválida. Intente de nuevo.\n");
+        }
+    }
+}
+
+int main() {
+    int n;
+    Dispositivo *tabla = crear_tabla_dispositivos(&n);
+
+    printf("Inicializando sistema de comunicación entre dispositivos...\n");
+    menu_interactivo(tabla, n);
+
+    free(tabla);
+
+    return 0;
+}
 
 ```
 
@@ -1281,5 +1594,3 @@ public class Index_11{
 1. Explica cómo los sistemas operativos modernos optimizan las operaciones de entrada/salida con el uso de la memoria caché. ✔️
 
 Los **sistemas operativos** modernos optimizan sus operaciones de E/S usando el manejo de memoria, especialmente a través de la **memoria caché**. La memoria caché es un acceso rápido de datos que se usa para un almacenamiento temporal, siendo estos datos los que se acceden con mayor frecuencia y/o que se prevee que así será. Al optimizar las operaciones de E/S con esta memoria, los sistemas mejoran su rendimiento y reduciendo los tiempos de espera.
-
-[def]: URL
