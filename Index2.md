@@ -178,7 +178,19 @@ Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo ca
 
 * Investiga las clasificaciones comunes de la seguridad, como física, lógica y de red.
 
+**Seguridad Física** Se refiere a la protección de los activos físicos de una organización, como servidores y dispositivos. Incluye medidas como el control de acceso, cámaras de vigilancia y sistemas de alarmas para evitar robos y daños.
+
+**Seguridad Lógica** Está relacionada con la protección de los sistemas informáticos y la información almacenada en ellos. Esto abarca el uso de firewalls, antivirus y sistemas de detección de intrusos para prevenir accesos no autorizados y ciberataques.
+
+**Seguridad de Red** Se enfoca en proteger la infraestructura de la red, implementando encriptación, segmentación y monitoreo constante para mitigar riesgos como ataques de hackers o malware​.
+
 * Explica el papel de cada clasificación en la protección de un sistema operativo.
+
+**Seguridad física** protege los elementos tangibles, como los servidores, dispositivos de almacenamiento y las infraestructuras en las que el sistema operativo se ejecuta. Por ejemplo, el acceso físico restringido al hardware a través de cerraduras, cámaras de vigilancia y controles de acceso impide que personas no autorizadas manipulen o roben equipos. Sin seguridad física, incluso un sistema operativo bien protegido a nivel lógico sería vulnerable a ataques de tipo físico, como el robo de discos duros que contienen datos sensibles.
+
+**Seguridad lógica** se enfoca en las medidas de protección que impiden accesos no autorizados a los recursos dentro del sistema operativo, como archivos, aplicaciones y configuraciones. Esto se logra mediante el uso de contraseñas, autenticación multifactor, permisos de acceso y herramientas de cifrado. Un sistema operativo emplea estas estrategias para asegurar que solo los usuarios y procesos autorizados puedan realizar ciertas acciones, como modificar archivos críticos o ejecutar aplicaciones privilegiadas. Sin esta capa, incluso si un sistema es físicamente seguro, un atacante podría acceder fácilmente a la información y recursos dentro del sistema.
+
+**Seguridad de red** protege los datos mientras se transmiten entre dispositivos a través de la red. A través del uso de protocolos como SSL/TLS para encriptar el tráfico, firewalls para filtrar el tráfico no deseado, y sistemas de detección de intrusos para identificar actividades sospechosas, se protege la integridad y confidencialidad de los datos mientras se comunican entre máquinas. Si bien las amenazas físicas o locales pueden ser gestionadas con seguridad física y lógica, los ataques de red pueden ocurrir de forma remota, y sin una red segura, un sistema operativo quedaría expuesto a intrusos a través de internet o redes locales.
 
 * Proporciona ejemplos prácticos de herramientas o técnicas utilizadas en cada clasificación.
 
@@ -189,11 +201,19 @@ Analiza las funciones que cumple un sistema de protección en un entorno multius
 
 **Tareas**
 
-* Describe cómo un sistema de protección controla el acceso a los recursos.
+* Describe cómo un sistema de protección controla el acceso a los recursos. ✔️
 
-* Explica las funciones principales como autentificación, autorización y auditoría.
+Un **sistema de protección** controla el acceso a los recursos verificando la identidad del usuario o proceso y asegurándose de que tenga los permisos adecuados para acceder o modificar los recursos. Utiliza mecanismos de autenticación para validar a los usuarios, y luego verifica si tienen autorización para realizar las acciones solicitadas. Además, aisla los recursos entre procesos para evitar interferencias y aplica políticas que definen cómo se asignan y gestionan los permisos. Todo esto se complementa con un monitoreo constante para detectar accesos no autorizados y garantizar la seguridad del sistema.
 
-* Diseña un caso práctico donde se muestren las funciones de un sistema de protección en acción.
+* Explica las funciones principales como autentificación, autorización y auditoría. ✔️
+
+La **autenticación** es el proceso mediante el cual un sistema verifica la identidad de un usuario o entidad que intenta acceder a un recurso. Generalmente, esto se realiza a través de credenciales como nombres de usuario y contraseñas, aunque también puede involucrar métodos más seguros como la autenticación multifactor (combinación de contraseñas, códigos enviados al móvil, huellas dactilares, etc.). El objetivo de la autenticación es garantizar que la persona o proceso que solicita acceso es quien dice ser.
+
+La **autorización** ocurre una vez que la autenticación ha tenido éxito. Se trata del proceso en el que el sistema determina qué recursos o acciones un usuario o proceso tiene permiso de acceder o realizar. Esto se controla mediante permisos y políticas de acceso, que definen qué puede hacer cada usuario con los recursos disponibles. Por ejemplo, un usuario podría tener permiso para leer un archivo pero no para modificarlo. La autorización asegura que solo los usuarios o procesos adecuados realicen operaciones sobre los recursos.
+
+La **auditoría** implica el registro y monitoreo de las actividades de acceso a los recursos del sistema. A través de registros de auditoría, se mantienen trazas detalladas de las acciones realizadas, como qué usuario accedió a qué recursos y qué operaciones ejecutó. Este proceso es crucial para detectar y analizar actividades sospechosas o no autorizadas, facilitando la investigación de incidentes de seguridad y ayudando a garantizar el cumplimiento de políticas de seguridad y normativas regulatorias.
+
+* Diseña un caso práctico donde se muestren las funciones de un sistema de protección en acción. ⭕
 
 ### EJERCICIO 4: Implantación de matrices de acceso.
 
@@ -202,11 +222,11 @@ Crea e implementa una matriz de acceso para un sistema que contiene usuarios y r
 
 **Tareas**
 
-* Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos.
+* Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos. ⭕
 
-* Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo.
+* Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo. ⭕
 
-* Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea.
+* Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea. ⭕
 
 ### EJERCICIO 5: Protección basada en el lenguaje.
 
@@ -215,11 +235,15 @@ Investiga cómo los lenguajes de programación pueden implementar mecanismos de 
 
 **Tareas**
 
-* Explica el concepto de protección basada en el lenguaje.
+* Explica el concepto de protección basada en el lenguaje. ✔️
 
-* Proporciona un ejemplo de cómo un lenguaje como Java o Rust asegura la memoria y evita accesos no autorizados.
+La **protección basada en el lenguaje** se refiere a la integración de medidas de seguridad directamente en los lenguajes de programación, para prevenir errores y vulnerabilidades en el software. El objetivo es hacer que los lenguajes de programación sean más seguros al facilitar que los desarrolladores eviten prácticas riesgosas o errores que podrían comprometer la seguridad del sistema. *Java* maneja automáticamente la memoria, lo que elimina problemas comunes como los desbordamientos de búfer (donde el programa escribe más allá del espacio de memoria asignado, lo que puede permitir ataques). Además, algunos lenguajes imponen restricciones sobre cómo se pueden manipular los datos, asegurando que solo se realicen operaciones seguras.
 
-* Compara este enfoque con otros mecanismos de protección en sistemas operativos.
+* Proporciona un ejemplo de cómo un lenguaje como Java o Rust asegura la memoria y evita accesos no autorizados. ✔️
+
+En **Java**, la seguridad de la memoria se maneja de manera automática mediante varias características que ayudan a prevenir accesos no autorizados y errores comunes. Un ejemplo clave es la gestión automática de memoria y el uso de referencias en lugar de punteros directos.
+
+* Compara este enfoque con otros mecanismos de protección en sistemas operativos. ⭕
 
 ### EJERCICIO 6: Validación y amenazas al sistema.
 
@@ -228,11 +252,26 @@ Analiza las principales amenazas a un sistema operativo y los mecanismos de vali
 
 **Tareas**
 
-* Investiga y describe al menos tres tipos de amenazas comunes (por ejemplo, malware, ataques de fuerza bruta, inyección de código).
+* Investiga y describe al menos tres tipos de amenazas comunes (por ejemplo, malware, ataques de fuerza bruta, inyección de código). ✔️
 
-* Explica los mecanismos de validación como autenticación multifactor y control de integridad.
+**Malware** Malware es un término que abarca cualquier tipo de software malicioso diseñado para dañar o explotar cualquier dispositivo, servicio o red programable. Los delincuentes cibernéticos generalmente lo usan para extraer datos que pueden utilizar como chantaje hacia las víctimas para obtener ganancias financieras. Dichos datos pueden variar desde datos financieros, hasta registros de atención médica, correos electrónicos personales y contraseñas. La variedad de información que puede verse comprometida se ha vuelto ilimitada.
 
-* Diseña un esquema de validación para un sistema operativo con múltiples usuarios.
+**Ataques de fuerza bruta** Un ataque de fuerza bruta es un método de piratería informática que utiliza pruebas y errores para descifrar contraseñas, credenciales de inicio de sesión y claves de cifrado. Es una táctica simple pero confiable para obtener acceso no autorizado a cuentas individuales y sistemas y redes de organizaciones. El pirata informático intenta varios nombres de usuario y contraseñas, a menudo utilizando una computadora para probar una amplia gama de combinaciones, hasta que encuentra la información de inicio de sesión correcta.
+El nombre "fuerza bruta" proviene de atacantes que utilizan intentos excesivamente forzados para obtener acceso a las cuentas de usuario. A pesar de ser un antiguo método de ciberataque, los ataques de fuerza bruta se prueban y examinan y siguen siendo una táctica popular entre los piratas informáticos.
+
+**Inyección de código** Un ataque cibernético de inyección de código es una técnica de ataque informático que se utiliza para explotar vulnerabilidades en un sitio web o aplicación. En este tipo de ataque, un hacker aprovecha las debilidades de la aplicación para insertar código malicioso en el servidor y así poder robar información confidencial, tomar el control del sistema o realizar otras acciones dañinas.
+
+* Explica los mecanismos de validación como autenticación multifactor y control de integridad. ✔️
+
+Los **mecanismos de validación** en son herramientas utilizadas para asegurar que solo usuarios o procesos autorizados tengan acceso a los recursos del sistema y que los datos se mantengan íntegros. Dos ejemplos comunes son la autenticación *multifactor* y el *control de integridad*.
+
+**Autenticación multifactor (MFA)** 
+Cuando inicias sesión en una cuenta en línea, normalmente usas un nombre de usuario y una contraseña. Sin embargo, estas son opciones inseguras, ya que los nombres de usuario pueden ser fáciles de adivinar y las contraseñas a menudo son débiles o se reutilizan en varios sitios. Para mejorar la seguridad, muchos servicios han implementado autenticación multifactor o verificación en dos pasos. Este proceso agrega una capa extra de protección, solicitando un segundo factor de autenticación, como un código enviado a tu teléfono, además de tu contraseña. Esto hace más difícil que los atacantes accedan a tus cuentas.
+
+**Control de integridad**
+Es un mecanismo que asegura que los datos no han sido modificados de manera no autorizada. Se utiliza para verificar que la información almacenada (archivos, configuraciones, etc.) esté intacta. Un ejemplo común es el uso de sumas de verificación (checksums) o códigos de autenticación de mensajes (MAC), que generan un valor único para cada conjunto de datos. Si los datos se modifican, el valor cambia, lo que permite detectar alteraciones.
+
+* Diseña un esquema de validación para un sistema operativo con múltiples usuarios. ⭕
 
 ### EJERCICIO 7: Cifrado.
 
@@ -241,8 +280,21 @@ Explora cómo los mecanismos de cifrado protegen la información en un sistema o
 
 **Tareas**
 
-* Define los conceptos de cifrado simétrico y asimétrico.
+* Define los conceptos de cifrado simétrico y asimétrico. ✔️
 
-* Proporciona un ejemplo práctico de cada tipo de cifrado aplicado en sistemas operativos.
+En el **cifrado simétrico**, sólo hay una clave, y todas las partes implicadas utilizan la misma clave para cifrar y descifrar la información. Al utilizar una única clave, el proceso es sencillo, como en el siguiente ejemplo: encriptas un correo electrónico con una clave única, envías ese correo a tu amigo David, y él utilizará la misma clave simétrica para desbloquear/desencriptar el correo.
 
-* Simula el proceso de cifrado y descifrado de un archivo con una calve dada.
+El **cifrado asimétrico**, por otro lado, se creó para resolver el problema inherente al cifrado simétrico: la necesidad de compartir una única clave de cifrado alrededor que se utiliza tanto para cifrar como para descifrar datos.
+
+* Proporciona un ejemplo práctico de cada tipo de cifrado aplicado en sistemas operativos. ✔️
+
+**Cifrado simétrico** 
+
+El cifrado simétrico es estupendo cuando se trabaja con datos sensibles a gran escala, o en tareas de cifrado que pretenden ocultar permanentemente la información sin necesidad de descifrarla. Por ejemplo, cuando se activa BitLocker en un ordenador con Windows para cifrar todos los discos duros. Al desbloquear el PC con su código de acceso, el usuario descifrará los datos sin riesgo de exponer su clave secreta de cifrado. Otro ejemplo son las VPN, que cifran su tráfico de red con una clave local y no tienen la necesidad de compartirla fuera de su propio uso.
+
+**Cifrado asimétrico:**
+
+Un buen ejemplo es el cifrado del correo electrónico. Con el cifrado asimétrico, cualquiera puede utilizar tu clave pública para enviarte un correo electrónico cifrado que sólo puedes descifrar con tu clave privada.
+Naturalmente, el asimétrico es un estándar de cifrado más avanzado y, por lo tanto, es más lento y consume más recursos. Por ello, suele utilizarse en transacciones más pequeñas, normalmente para establecer canales de comunicación seguros o autenticar usuarios.
+
+* Simula el proceso de cifrado y descifrado de un archivo con una calve dada. ⭕
