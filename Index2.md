@@ -2,7 +2,7 @@
 
 ## SISTEMAS DE ARCHIVO
 
-### EJERCICIO 1: Concepto y noción de archivo real y virtual.
+### ❇️ EJERCICIO 1: Concepto y noción de archivo real y virtual.
 
 **Descripción**
 Define los conceptos de archivo real y archivo virtual y explica sus diferencias.
@@ -38,7 +38,7 @@ echo 500 > /sys/class/backlight/intel_backlight/brightness
 
 El sistema interpreta este valor y ajusta el hardware sin escribir en el disco ni reiniciar. Es rápido, seguro y eficiente, mientras que usar un archivo real sería más lento y propenso a errores.
 
-### EJERCICIO 2: Componentes de un sistema de archivos.
+### ❇️ EJERCICIO 2: Componentes de un sistema de archivos.
 
 **Descripción**
 Investiga los componentes principales de un sistema de archivos y compáralos entre dos sistemas operativos, como Linux y Windows.
@@ -73,7 +73,7 @@ Para la administración del almacenamiento, EXT4 organiza el espacio en bloques 
 
 Ambos sistemas implementan journaling para asegurar la integridad de los archivos, pero NTFS proporciona una recuperación más robusta debido a su estructura de MFT y comprobación de integridad. Aunque EXT4 es más sencillo y eficiente, NTFS destaca en entornos donde se requiere un mayor control de los permisos y la recuperación ante fallos.
 
-### EJERCICIO 3: Organización lógica y física de archivos.
+### ❇️ EJERCICIO 3: Organización lógica y física de archivos.
 
 **Descripción**
 Crea un esquema que muestre la organización lógica y física de un sistema de archivos.
@@ -81,13 +81,47 @@ Explica cómo se relacionan las estructuras lógicas con las físicas en el disc
 
 **Tareas**
 
-* Diseña un árbol jerárquico que represente la organización lógica de directorios y subdirectorios. ⭕
+* Diseña un árbol jerárquico que represente la organización lógica de directorios y subdirectorios. ✔️
 
-* Explica cómo se traduce la dirección lógica a la dirección física en el disco. ⭕
+```
+/archivos
+├── /documentos
+│   ├── /informes
+│   ├── /facturas
+│   └── /contratos
+├── /imágenes
+│   ├── /fotos_personales
+│   ├── /fotos_trabajo
+│   └── /fotos_publicidad
+├── /música
+│   ├── /rock
+│   ├── /pop
+│   └── /clasica
+├── /videos
+│   ├── /peliculas
+│   ├── /tutoriales
+│   └── /documentales
+└── /almacenamiento_físico
+    ├── /disco_duro_1
+    ├── /disco_duro_2
+    └── /copia_respaldo
+        ├── /documentos_backup
+        ├── /imágenes_backup
+        └── /videos_backup
+```
 
-* Proporciona un ejemplo práctico de cómo un archivo se almacena físicamente. ⭕
+* Explica cómo se traduce la dirección lógica a la dirección física en el disco. ✔️
 
-### EJERCICIO 4: Mecanismos de accedo a los archivos.
+Cuando un sistema operativo necesita acceder a un archivo, utiliza direcciones lógicas. Estas son las direcciones que ve el sistema de archivos, y son usadas por los usuarios y aplicaciones para identificar archivos o bloques de datos. Estas direcciones son abstractas y no tienen relación directa con la ubicación física en el disco.
+Las direcciones físicas, corresponden a las ubicaciones reales de los bloques de datos en el hardware del disco (por ejemplo, en el disco duro o SSD). Estas direcciones son específicas para cada dispositivo de almacenamiento y dependen de la estructura interna de este.
+
+La traducción de una dirección lógica a una física es gestionada por el sistema de gestión de archivos (FMS) y un componente llamado gestor de almacenamiento. Este proceso involucra varios pasos: Sistemas de Archivos y Bloques de Datos, Tabla de Asignación de Archivos, Controlador de Disco y Traducción, Acceso al Hardware.
+
+* Proporciona un ejemplo práctico de cómo un archivo se almacena físicamente. ✔️
+
+Cuando guardas un archivo como "documento.txt", el sistema operativo lo divide en bloques lógicos, que son direcciones abstractas que el sistema utiliza para organizar los datos. Estos bloques se asocian a un inodo, que guarda información sobre el archivo y la ubicación de esos bloques. Luego, el sistema mapea estos bloques lógicos a direcciones físicas en el disco a través de una tabla interna. Finalmente, los datos se escriben en los sectores físicos del disco, donde el controlador del dispositivo asegura que los datos se guarden en las ubicaciones correctas.
+
+### ❇️ EJERCICIO 4: Mecanismos de accedo a los archivos.
 
 **Descripción**
 Simula diferentes mecanismos de acceso a archivos (secuencial, directo e indexado) en un entorno práctico.
@@ -110,7 +144,7 @@ Open (abrir): antes de utilizar un archivo, un proceso debe abrirlo. La finalida
 
 Close (cerrar): cuando concluyen los accesos, los atributos y direcciones del disco ya no son necesarios, por lo que el archivo debe cerrarse y liberar la tabla de espacio interno.
 
-* Escribe un pseudocódigo que muestre cómo acceder a: ⭕
+* Escribe un pseudocódigo que muestre cómo acceder a: ✔️
 
 1. Un archivo secuencialmente.
 
@@ -118,7 +152,55 @@ Close (cerrar): cuando concluyen los accesos, los atributos y direcciones del di
 
 3. Un archivo utilizando un índice.
 
-* Compara las ventajas de cada mecanismo dependiendo del caso de uso. ⭕
+```pseudocódigo
+
+Mostrar "Selecciona un método de acceso al archivo:"
+Mostrar "1. Acceso Secuencial"
+Mostrar "2. Acceso Directo Mediante Posición"
+Mostrar "3. Acceso Usando un Índice"
+
+Leer opción_usuario
+
+Si opción_usuario == 1:
+    Mostrar "Acceso Secuencial seleccionado"
+    Abrir archivo para lectura
+    Mientras no se llegue al final del archivo:
+        Leer siguiente línea o bloque
+        Procesar la línea o bloque leída
+    Cerrar archivo
+
+Si opción_usuario == 2:
+    Mostrar "Acceso Directo Mediante Posición seleccionado"
+    Abrir archivo en modo lectura
+    Posición = Leer("Introduce la posición en bytes:")
+    Mover el cursor a la posición deseada
+    Leer los datos desde esa posición
+    Procesar los datos leídos
+    Cerrar archivo
+
+Si opción_usuario == 3:
+    Mostrar "Acceso Usando un Índice seleccionado"
+    Abrir archivo de índice
+    Abrir archivo de datos
+    Leer índice de archivo
+    Para cada entrada del índice:
+        Buscar la posición correspondiente en el archivo de datos
+        Leer datos desde la posición indicada por el índice
+        Procesar los datos leídos
+    Cerrar archivo de datos
+    Cerrar archivo de índice
+
+```
+
+* Compara las ventajas de cada mecanismo dependiendo del caso de uso. ✔️
+
+Los **Directorios** permiten organizar archivos de manera jerárquica, facilitando la búsqueda y gestión eficiente. Son ideales para sistemas con muchos archivos, ayudando a mantener un orden claro y rápido acceso.
+
+Los **Descriptores de archivos** contienen la información necesaria para gestionar archivos de forma eficiente. Son esenciales en entornos multitarea donde varios procesos interactúan con archivos, ya que permiten un acceso rápido y eficaz.
+
+Los **Mecanismos de control de acceso** aseguran que solo usuarios autorizados puedan acceder a datos o recursos. Son cruciales en sistemas sensibles, como los bancarios o de salud, para proteger la confidencialidad e integridad de la información.
+
+Los **Procedimientos para abrir y cerrar archivos** gestionan eficientemente los recursos del sistema, asegurando que los archivos se accedan solo cuando sea necesario y liberando memoria al cerrarlos. Son útiles en sistemas con limitaciones de recursos o que manejan grandes volúmenes de datos.
 
 ### EJERCICIO 5: Modelo jerárquico y mecanismos de recuperación en caso de falla.
 
@@ -138,7 +220,7 @@ Describe cómo recuperar los datos utilizando mecanismos de recuperación.
 
 ## PROTECCIÓN Y SEGURIDAD
 
-### EJERCICIO 1: Concepto y objetivos de protección y seguridad.
+### ❇️ EJERCICIO 1: Concepto y objetivos de protección y seguridad.
 
 **Descripción**
 Investiga los conceptos de protección y seguridad en sistemas operativos.
@@ -176,7 +258,7 @@ Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo ca
 
 **Tareas**
 
-* Investiga las clasificaciones comunes de la seguridad, como física, lógica y de red.
+* Investiga las clasificaciones comunes de la seguridad, como física, lógica y de red. ✔️
 
 **Seguridad Física** Se refiere a la protección de los activos físicos de una organización, como servidores y dispositivos. Incluye medidas como el control de acceso, cámaras de vigilancia y sistemas de alarmas para evitar robos y daños.
 
@@ -184,7 +266,7 @@ Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo ca
 
 **Seguridad de Red** Se enfoca en proteger la infraestructura de la red, implementando encriptación, segmentación y monitoreo constante para mitigar riesgos como ataques de hackers o malware​.
 
-* Explica el papel de cada clasificación en la protección de un sistema operativo.
+* Explica el papel de cada clasificación en la protección de un sistema operativo. ✔️
 
 **Seguridad física** protege los elementos tangibles, como los servidores, dispositivos de almacenamiento y las infraestructuras en las que el sistema operativo se ejecuta. Por ejemplo, el acceso físico restringido al hardware a través de cerraduras, cámaras de vigilancia y controles de acceso impide que personas no autorizadas manipulen o roben equipos. Sin seguridad física, incluso un sistema operativo bien protegido a nivel lógico sería vulnerable a ataques de tipo físico, como el robo de discos duros que contienen datos sensibles.
 
@@ -192,7 +274,7 @@ Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo ca
 
 **Seguridad de red** protege los datos mientras se transmiten entre dispositivos a través de la red. A través del uso de protocolos como SSL/TLS para encriptar el tráfico, firewalls para filtrar el tráfico no deseado, y sistemas de detección de intrusos para identificar actividades sospechosas, se protege la integridad y confidencialidad de los datos mientras se comunican entre máquinas. Si bien las amenazas físicas o locales pueden ser gestionadas con seguridad física y lógica, los ataques de red pueden ocurrir de forma remota, y sin una red segura, un sistema operativo quedaría expuesto a intrusos a través de internet o redes locales.
 
-* Proporciona ejemplos prácticos de herramientas o técnicas utilizadas en cada clasificación.
+* Proporciona ejemplos prácticos de herramientas o técnicas utilizadas en cada clasificación. ⭕
 
 ### EJERCICIO 3: Funciones del sistema de protección.
 
