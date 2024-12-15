@@ -251,7 +251,7 @@ Bajo el ejemplo de un sistema operativo de un banco que gestiona cuentas de clie
 
 *Disponibilidad:* Garantiza que los servicios bancarios estén siempre disponibles mediante copias de seguridad y recuperación ante fallos.
 
-### EJERCICIO 2: Clasificación aplicada a la seguridad.
+### ❇️ EJERCICIO 2: Clasificación aplicada a la seguridad.
 
 **Descripción**
 Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo cada tipo contribuye a la proteccion del sistema.
@@ -274,7 +274,13 @@ Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo ca
 
 **Seguridad de red** protege los datos mientras se transmiten entre dispositivos a través de la red. A través del uso de protocolos como SSL/TLS para encriptar el tráfico, firewalls para filtrar el tráfico no deseado, y sistemas de detección de intrusos para identificar actividades sospechosas, se protege la integridad y confidencialidad de los datos mientras se comunican entre máquinas. Si bien las amenazas físicas o locales pueden ser gestionadas con seguridad física y lógica, los ataques de red pueden ocurrir de forma remota, y sin una red segura, un sistema operativo quedaría expuesto a intrusos a través de internet o redes locales.
 
-* Proporciona ejemplos prácticos de herramientas o técnicas utilizadas en cada clasificación. ⭕
+* Proporciona ejemplos prácticos de herramientas o técnicas utilizadas en cada clasificación. ✔️
+
+**Seguridad Física** Un ejemplo práctico es el uso de controles biométricos para ingresar a una sala de servidores. Estas herramientas aseguran que solo el personal autorizado pueda acceder físicamente al hardware crítico. Cámaras de vigilancia en tiempo real y sistemas de alarma integrados con sensores de movimiento también son comunes para proteger contra robos o sabotajes.
+
+**Seguridad Lógica** Herramientas como firewalls se utilizan para bloquear conexiones no autorizadas a un sistema informático, mientras que el software antivirus detecta y elimina programas maliciosos. Sistemas de detección y prevención de intrusos (IDS/IPS) monitorean y bloquean intentos sospechosos de acceso.
+
+**Seguridad de Red** En este ámbito, el uso de protocolos como VPN para encriptar datos y proteger la comunicación entre dispositivos es crucial. Además, soluciones como la segmentación de red, que divide una red en segmentos más pequeños, limitan la propagación de amenazas, mientras que herramientas de monitoreo continuo identifican actividades inusuales en la red.
 
 ### EJERCICIO 3: Funciones del sistema de protección.
 
