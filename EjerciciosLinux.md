@@ -584,3 +584,162 @@ También se podría añadir una opción para ejecutar ciertos comandos solo bajo
 ---
 
 ## EJERCICIOS
+
+### EJERCICIO 1
+
+* **Objetivo:** Aprender a montar y desmontar un dispositivo externo.
+
+* Inserta una memoria USB en el sistema.
+
+* Encuentra el dispositivo usando el comando:
+
+
+      lsblk o fdisk -l
+* Monta la memoria USB en un directorio, por ejemplo, `/mnt/usb`:
+
+      sudo mount /dev/sdX1 /mnt/usb
+* Verifica que esté montado correctamente:
+
+      df -h
+* Copia un archivo desde tu directorio personal al dispositivo USB:
+
+      cp archivo.txt /mnt/usb/
+* Desmonta la memoria USB:
+
+      sudo umount /mnt/usb
+
+```bash
+
+```
+
+---
+
+### EJERCICIO 2
+
+* **Objetivo:** Usar redirección para guardar la salida de comandos en archivos.
+
+* Lista los archivos de tu directorio actual y guarda el resultado en un archivo `listado.txt`:
+
+      ls -l > listado.txt
+
+* Muestra el contenido del archivo en la terminal:
+
+      cat listado.txt
+* Añade la fecha actual al final del archivo:
+
+      date >> listado.txt
+* Muestra todo el contenido del archivo nuevamente:
+
+      cat listado.txt
+
+```bash
+
+```
+
+---
+
+### EJERCICIO 3
+
+* **Objetivo:** Practicar copiar y mover archivos y directorios.
+
+* Crea un archivo de texto llamado `archivo1.txt`:
+
+      echo "Este es un archivo de prueba" > archivo1.txt
+* Copia este archivo a otro directorio, por ejemplo, `/tmp`:
+
+      cp archivo1.txt /tmp/
+* Renombra el archivo copiado a `archivo2.txt` en `/tmp`:
+
+      mv /tmp/archivo1.txt /tmp/archivo2.txt
+* Mueve el archivo `archivo2.txt` de vuelta a tu directorio actual:
+
+      mv /tmp/archivo2.txt .
+
+```bash
+
+```
+
+---
+
+### EJERCICIO 4
+
+* **Objetivo:** Aprender a trabajar con compresión de archivos.
+
+* Crea un directorio llamado `backup` y copia algunos archivos en él.
+
+* Comprime el directorio `backup` en un archivo `.tar.gz`:
+
+      tar -czvf backup.tar.gz backup/
+* Borra el directorio original y extrae el contenido del archivo comprimido:
+
+      tar -xzvf backup.tar.gz
+
+```bash
+
+```
+
+---
+
+### EJERCICIO 5
+
+* **Objetivo:** Aprender a modificar permisos y propietarios de archivos.
+
+* Crea un archivo llamado `privado.txt`:
+
+      touch privado.txt
+* Cambia los permisos del archivo para que solo el propietario pueda leer y escribir:
+
+      chmod 600 privado.txt
+* Cambia el propietario del archivo a otro usuario (si tienes privilegios):
+
+      sudo chown usuario privado.txt
+
+```bash
+
+
+```
+
+---
+
+### EJERCICIO 6
+
+* **Objetivo:** Identificar discos y particiones en el sistema.
+
+* Usa `lsblk` para listar los discos y particiones:
+
+      lsblk
+* Usa `du -sh` para ver el tamaño del contenido en un directorio de tu elección:
+
+      du -sh /ruta/directorio
+* Verifica el uso de disco con `df -h`:
+
+      df -h
+
+```bash
+
+
+```
+
+---
+
+### EJERCICIO 7
+
+* **Objetivo:** Crear y formatear una nueva partición (Usar disco de práctica o máquina virtual).
+
+* Identifica un disco no particionado:
+
+      sudo fdisk -l
+* Usa `fdisk` para crear una nueva partición:
+
+      sudo fdisk /dev/sdX
+* Formatea la partición como `ext4`:
+
+      sudo mkfs.ext4 /dev/sdX1
+* Monta la partición en un directorio y prueba escribiendo archivos en ella:
+
+      sudo mount /dev/sdX1 /mnt/nueva_particion
+      echo "Prueba de escritura" > /mnt/nueva_particion/test.txt
+
+```bash
+
+```
