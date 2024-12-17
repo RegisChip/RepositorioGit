@@ -169,7 +169,7 @@ El sistema de archivos principal es `ext4`, que está en `/dev/sda2`. Los sistem
 
 ---
 
-### ACTIVIDAD 3
+### ACTIVIDAD 3 🌐
 
 1. Ejecute `cat /proc/bus/input/devices` para listar los dispositivos de entrada.
 
@@ -271,7 +271,11 @@ B: ABS=3
 
 * ¿Qué eventos genera cada dispositivo al interactuar con ellos?
 
+Los dispositivos en ``/proc/bus/input/devices`` generan diferentes tipos de eventos según su función. Por ejemplo, los botones de encendido y suspensión generan eventos de teclado cuando se presionan, el teclado genera eventos de teclas presionadas, y los ratones generan eventos de movimiento y clics. Además, algunos dispositivos virtuales también generan eventos de interacción con el ratón.
+
 * ¿Cómo se identifican los dispositivos en `/proc/bus/input/devices`?
+
+Los dispositivos se identifican por su bus, código de fabricante y producto, nombre, ubicación física y los eventos que generan. Estos detalles ayudan a determinar qué dispositivo está presente y cómo interactúa con el sistema.
 
 ---
 
@@ -585,7 +589,7 @@ También se podría añadir una opción para ejecutar ciertos comandos solo bajo
 
 ## EJERCICIOS
 
-### EJERCICIO 1
+### EJERCICIO 1 🌐
 
 * **Objetivo:** Aprender a montar y desmontar un dispositivo externo.
 
@@ -897,7 +901,7 @@ tmpfs           392M  148K  392M   1% /run/user/1000
 
 ---
 
-### EJERCICIO 7
+### EJERCICIO 7 🌐
 
 * **Objetivo:** Crear y formatear una nueva partición (Usar disco de práctica o máquina virtual).
 
