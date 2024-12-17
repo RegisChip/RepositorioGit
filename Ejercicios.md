@@ -2,7 +2,7 @@
 
 ## ACTIVIDADES
 
-#### ACTIVIDAD 1
+#### ACTIVIDAD 1 🌐
 
 1. Abra una terminal en su entorno Linux.
 
@@ -95,13 +95,19 @@ Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
 * ¿Qué tipos de dispositivos se muestran en la salida de `lsblk`?
 
+En `lsblk` muestra los dispositivos de almacenamiento. Por ejemplo, el dico principal `sda`, sus particiones y dispositivos en bucle. También aparece una unidad de CD/DVD virtual.
+
 * ¿Cuál es la diferencia entre `lsusb` y `lspci`?
+
+`lsusb` te dice qué dispositivos USB están conectados, como un mouse o teclado. En cambio, `lspci` muestra hardware más general conectado al bus PCI, como la tarjeta de red, el audio o la tarjeta gráfica.
 
 * ¿Qué información adicional proporciona `dmesg | grep usb`?
 
+El comando `dmesg | grep usb` da más detalles sobre cómo se detectaron los dispositivos USB al arrancar el sistema. Dice quién fabricó el dispositivo, su modelo y si el sistema lo reconoció correctamente.
+
 ---
 
-### ACTIVIDAD 2
+### ACTIVIDAD 2 🌐
 
 1. Use el comando `fdisk -l` para listar todos los discos y particiones.
 
@@ -151,9 +157,15 @@ tmpfs           392M  148K  392M   1% /run/user/1000
 
 * ¿Qué dispositivos de almacenamiento están conectados a su sistema?
 
+El disco principal es `/dev/sda`, que tiene una partición activa `/dev/sda2` de 40 GB. También aparecen varios dispositivos en bucle, que se usan para aplicaciones empaquetadas o imágenes montadas, aunque no están accesibles directamente debido a restricciones de permisos.
+
 * ¿Qué particiones están montadas actualmente?
 
+La partición `/dev/sda2` está montada como el sistema de archivos raíz. Además, hay sistemas temporales montados como tmpfs, que son usados para la memoria RAM y tareas temporales del sistema.
+
 * ¿Qué tipo de sistemas de archivos se usan en las particiones?
+
+El sistema de archivos principal es `ext4`, que está en `/dev/sda2`. Los sistemas `tmpfs` son basados en RAM y se usan para directorios temporales como `/run`, ``/dev/shm``, y ``/run/lock``.
 
 ---
 
