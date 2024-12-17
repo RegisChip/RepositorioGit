@@ -614,7 +614,7 @@ También se podría añadir una opción para ejecutar ciertos comandos solo bajo
 
 ---
 
-### EJERCICIO 2
+### EJERCICIO 2 🌐
 
 * **Objetivo:** Usar redirección para guardar la salida de comandos en archivos.
 
@@ -634,11 +634,78 @@ También se podría añadir una opción para ejecutar ciertos comandos solo bajo
 
 ```bash
 
+┌───────────────────>
+│~ 
+└─> ls -l > listado.txt
+
+┌───────────────────>
+│~ 
+└─> cat listado.txt
+total 404
+drwxrwxr-x 2 quetzal quetzal   4096 Nov 26 17:52 central
+-rw-rw-r-- 1 quetzal quetzal    114 Nov 26 18:18 coco.sh
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Desktop
+-rw-rw-r-- 1 quetzal quetzal    251 Dec 16 16:31 dispositivos.sh
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Documents
+drwxr-xr-x 3 quetzal quetzal   4096 Nov 27 18:52 Downloads
+-rwxr-xr-x 1 quetzal quetzal    274 Nov 26 18:07 foqui.sh
+-rw-rw-r-- 1 quetzal quetzal    387 Nov 26 19:19 Hollywood.sh
+-rw-rw-r-- 1 quetzal quetzal     26 Nov 26 19:21 hora.sh
+-rw-rw-r-- 1 quetzal quetzal 323060 Nov 27 16:35 ima2.png
+-rwxr-xr-x 1 quetzal quetzal    573 Nov 28 19:34 install.sh
+-rw-rw-r-- 1 quetzal quetzal      0 Dec 16 16:35 listado.txt
+drwxrwxr-x 3 quetzal quetzal   4096 Nov 28 19:14 miku
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Music
+-rw-rw-r-- 1 quetzal quetzal    126 Nov 26 18:23 panda.sh
+-rw-rw-r-- 1 quetzal quetzal    163 Nov 26 17:52 parker.sh
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Pictures
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Public
+drwx------ 5 quetzal quetzal   4096 Nov 26 19:47 snap
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Templates
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Videos
+-rw-rw-r-- 1 quetzal quetzal    761 Nov 28 17:17 wget-log
+-rw-rw-r-- 1 quetzal quetzal    761 Nov 28 17:19 wget-log.1
+-rw-rw-r-- 1 quetzal quetzal    763 Nov 28 18:52 wget-log.2
+
+┌───────────────────>
+│~ 
+└─> date >> listado.txt 
+
+┌───────────────────>
+│~ 
+└─> cat listado.txt 
+total 404
+drwxrwxr-x 2 quetzal quetzal   4096 Nov 26 17:52 central
+-rw-rw-r-- 1 quetzal quetzal    114 Nov 26 18:18 coco.sh
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Desktop
+-rw-rw-r-- 1 quetzal quetzal    251 Dec 16 16:31 dispositivos.sh
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Documents
+drwxr-xr-x 3 quetzal quetzal   4096 Nov 27 18:52 Downloads
+-rwxr-xr-x 1 quetzal quetzal    274 Nov 26 18:07 foqui.sh
+-rw-rw-r-- 1 quetzal quetzal    387 Nov 26 19:19 Hollywood.sh
+-rw-rw-r-- 1 quetzal quetzal     26 Nov 26 19:21 hora.sh
+-rw-rw-r-- 1 quetzal quetzal 323060 Nov 27 16:35 ima2.png
+-rwxr-xr-x 1 quetzal quetzal    573 Nov 28 19:34 install.sh
+-rw-rw-r-- 1 quetzal quetzal      0 Dec 16 16:35 listado.txt
+drwxrwxr-x 3 quetzal quetzal   4096 Nov 28 19:14 miku
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Music
+-rw-rw-r-- 1 quetzal quetzal    126 Nov 26 18:23 panda.sh
+-rw-rw-r-- 1 quetzal quetzal    163 Nov 26 17:52 parker.sh
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Pictures
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Public
+drwx------ 5 quetzal quetzal   4096 Nov 26 19:47 snap
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Templates
+drwxr-xr-x 2 quetzal quetzal   4096 Nov 26 02:42 Videos
+-rw-rw-r-- 1 quetzal quetzal    761 Nov 28 17:17 wget-log
+-rw-rw-r-- 1 quetzal quetzal    761 Nov 28 17:19 wget-log.1
+-rw-rw-r-- 1 quetzal quetzal    763 Nov 28 18:52 wget-log.2
+Mon Dec 16 04:37:14 PM UTC 2024
+
 ```
 
 ---
 
-### EJERCICIO 3
+### EJERCICIO 3 🌐
 
 * **Objetivo:** Practicar copiar y mover archivos y directorios.
 
@@ -657,11 +724,44 @@ También se podría añadir una opción para ejecutar ciertos comandos solo bajo
 
 ```bash
 
+┌───────────────────>
+│~ 
+└─> touch archivo1.txt
+
+┌───────────────────>
+│~ 
+└─> echo "Hola profe ggg" > archivo1.txt 
+
+┌───────────────────>
+│~ 
+└─> cp archivo1.txt /tmp/
+
+┌───────────────────>
+│~/tmp 
+└─> ls
+archivo1.txt
+
+┌───────────────────>
+│~/tmp 
+└─> mv archivo1.txt archivo2.txt
+
+┌───────────────────>
+│~/tmp 
+└─> mv /tmp/archivo2.txt .
+
+┌───────────────────>
+│~ 
+└─> ls
+archivo1.txt  Desktop          foqui.sh      install.sh   panda.sh   snap       wget-log
+archivo2.txt  dispositivos.sh  Hollywood.sh  listado.txt  parker.sh  Templates  wget-log.1
+central       Documents        hora.sh       miku         Pictures   tmp        wget-log.2
+coco.sh       Downloads        ima2.png      Music        Public     Videos
+
 ```
 
 ---
 
-### EJERCICIO 4
+### EJERCICIO 4 🌐
 
 * **Objetivo:** Aprender a trabajar con compresión de archivos.
 
@@ -676,11 +776,31 @@ También se podría añadir una opción para ejecutar ciertos comandos solo bajo
 
 ```bash
 
+┌───────────────────>
+│~ 
+└─> mkdir backup
+
+┌───────────────────>
+│~ 
+└─> tar -czvf backup.tar.gz backup/
+
+backup/
+backup/archivo1.txt
+backup/archivo2.txt
+
+┌───────────────────>
+│~ 
+└─> tar -xzvf backup.tar.gz
+
+backup/
+backup/archivo1.txt
+backup/archivo2.txt
+
 ```
 
 ---
 
-### EJERCICIO 5
+### EJERCICIO 5 🌐
 
 * **Objetivo:** Aprender a modificar permisos y propietarios de archivos.
 
@@ -696,12 +816,25 @@ También se podría añadir una opción para ejecutar ciertos comandos solo bajo
 
 ```bash
 
+┌───────────────────>
+│~ 
+└─> touch privado.txt
+
+┌───────────────────>
+│~ 
+└─> chmod 600 privado.txt
+
+-rw-------  1 quetzal quetzal      0 Dec 16 17:28 privado.txt
+
+┌───────────────────>
+│~ 
+└─> chmod 644 privado.txt
 
 ```
 
 ---
 
-### EJERCICIO 6
+### EJERCICIO 6 🌐
 
 * **Objetivo:** Identificar discos y particiones en el sistema.
 
@@ -717,6 +850,48 @@ También se podría añadir una opción para ejecutar ciertos comandos solo bajo
 
 ```bash
 
+┌───────────────────>
+│~ 
+└─> lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0    7:0    0     4K  1 loop /snap/bare/5
+loop1    7:1    0  10.8M  1 loop /snap/snap-store/1244
+loop2    7:2    0  73.9M  1 loop /snap/core22/1663
+loop3    7:3    0 269.8M  1 loop /snap/firefox/4793
+loop4    7:4    0  11.1M  1 loop /snap/firmware-updater/147
+loop5    7:5    0  10.7M  1 loop /snap/firmware-updater/127
+loop6    7:6    0  91.7M  1 loop /snap/gtk-common-themes/1535
+loop7    7:7    0 505.1M  1 loop /snap/gnome-42-2204/176
+loop8    7:8    0  38.8M  1 loop /snap/snapd/21759
+loop9    7:9    0  10.5M  1 loop /snap/snap-store/1173
+loop10   7:10   0  44.3M  1 loop /snap/snapd/23258
+loop11   7:11   0   568K  1 loop /snap/snapd-desktop-integration/253
+loop12   7:12   0   500K  1 loop /snap/snapd-desktop-integration/178
+loop13   7:13   0  73.9M  1 loop /snap/core22/1722
+sda      8:0    0    40G  0 disk 
+├─sda1   8:1    0     1M  0 part 
+└─sda2   8:2    0    40G  0 part /
+sr0     11:0    1  1024M  0 rom  
+
+┌───────────────────>
+│~ 
+└─> du -sh /snap/bare/5
+512	/snap/bare/5
+
+┌───────────────────>
+│~ 
+└─> du -sh /snap/firmware-updater/147
+34M	/snap/firmware-updater/147
+
+┌───────────────────>
+│~ 
+└─> df -h
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           392M  1.6M  391M   1% /run
+/dev/sda2        40G  6.7G   31G  19% /
+tmpfs           2.0G     0  2.0G   0% /dev/shm
+tmpfs           5.0M  8.0K  5.0M   1% /run/lock
+tmpfs           392M  148K  392M   1% /run/user/1000
 
 ```
 
@@ -741,5 +916,114 @@ También se podría añadir una opción para ejecutar ciertos comandos solo bajo
       echo "Prueba de escritura" > /mnt/nueva_particion/test.txt
 
 ```bash
+
+┌───────────────────>
+│~ 
+└─> sudo fdisk -l
+Disk /dev/loop0: 4 KiB, 4096 bytes, 8 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop1: 10.76 MiB, 11280384 bytes, 22032 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop2: 73.88 MiB, 77463552 bytes, 151296 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop3: 269.77 MiB, 282873856 bytes, 552488 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop4: 11.11 MiB, 11649024 bytes, 22752 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop5: 10.72 MiB, 11239424 bytes, 21952 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop6: 91.69 MiB, 96141312 bytes, 187776 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop7: 505.09 MiB, 529625088 bytes, 1034424 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sda: 40 GiB, 42949672960 bytes, 83886080 sectors
+Disk model: VBOX HARDDISK   
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: B13DF641-E24D-4D9F-9F9D-7CD2E8736869
+
+Device     Start      End  Sectors Size Type
+/dev/sda1   2048     4095     2048   1M BIOS boot
+/dev/sda2   4096 83884031 83879936  40G Linux filesystem
+
+
+Disk /dev/loop8: 38.83 MiB, 40714240 bytes, 79520 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop9: 10.54 MiB, 11051008 bytes, 21584 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop10: 44.3 MiB, 46448640 bytes, 90720 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop11: 568 KiB, 581632 bytes, 1136 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop12: 500 KiB, 512000 bytes, 1000 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/loop13: 73.87 MiB, 77459456 bytes, 151288 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+┌───────────────────>
+│~ 
+└─> sudo fdisk /dev/sdX
+
+Welcome to fdisk (util-linux 2.39.3).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+fdisk: cannot open /dev/sdX: No such file or directory
 
 ```
