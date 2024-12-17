@@ -275,7 +275,7 @@ B: ABS=3
 
 ---
 
-### ACTIVIDAD 4
+### ACTIVIDAD 4 🌐
 
 1. Use `xrandr` para listar las pantallas conectadas y sus resoluciones.
 
@@ -284,6 +284,7 @@ B: ABS=3
 3. Use `lsof /dev/snd/*` para ver qué procesos están utilizando la tarjeta de sonido.
 
 ```bash
+
 ┌───────────────────>
 │~ 
 └─> xrandr
@@ -308,7 +309,6 @@ Virtual-1 connected primary 1280x800+0+0 (normal left inverted right x axis y ax
    720x400       59.55  
    640x350       59.77  
 
-
 ┌───────────────────>
 │~ 
 └─> aplay -l
@@ -316,7 +316,6 @@ Virtual-1 connected primary 1280x800+0+0 (normal left inverted right x axis y ax
 card 0: I82801AAICH [Intel 82801AA-ICH], device 0: Intel ICH [Intel 82801AA-ICH]
   Subdevices: 1/1
   Subdevice #0: subdevice #0
-
 
 ┌───────────────────>
 │/🔒 
@@ -332,13 +331,19 @@ wireplumb 1765 quetzal   35u   CHR  116,5      0t0  682 /dev/snd/controlC0
 
 * ¿Qué salidas de video están disponibles en su sistema?
 
-* ¿Qué dispositivos de sonido se detectaron?
+El sistema tiene una salida de video virtual llamada ``Virtual-1``, configurada actualmente a una resolución de 1280x800 píxeles. También están disponibles otras resoluciones, como 1024x768, 800x600 y 640x480, entre otras.
+
+* ¿Qué dispositivos de sonido se detectaron?`
+
+El sistema detectó un dispositivo de sonido Intel 82801AA-ICH con un subdispositivo disponible para reproducción.
 
 * ¿Qué procesos están usando la tarjeta de sonido?
 
+Los procesos ``pipewire`` (PID 1752) y ``wireplumber`` (PID 1765) están accediendo a la tarjeta de sonido. Estos son servicios relacionados con la gestión de audio en sistemas Linux modernos.
+
 ---
 
-### ACTIVIDAD 5
+### ACTIVIDAD 5 🌐
 
 1. Cree un archivo llamado `dispositivos.sh` y agregue el siguiente contenido: ```bash #!/bin/bash echo "Dispositivos de bloque:" lsblk echo "Dispositivos USB:" lsusb echo "Dispositivos PCI:" lspci echo "Dispositivos de entrada:" cat /proc/bus/input/devices echo "Salidas de video:" xrandr echo "Tarjetas de sonido:" aplay -l ```
 
@@ -352,6 +357,7 @@ wireplumb 1765 quetzal   35u   CHR  116,5      0t0  682 /dev/snd/controlC0
 │~ 
 └─> nano dispositivos.sh 
 
+...
 
 
 #!/bin/bash
@@ -380,7 +386,7 @@ echo "Tarjetas de sonido:"
 
 aplay -l
 
-
+...
 
 ┌───────────────────>
 │~ 
@@ -526,6 +532,39 @@ card 0: I82801AAICH [Intel 82801AA-ICH], device 0: Intel ICH [Intel 82801AA-ICH]
   Subdevices: 0/1
   Subdevice #0: subdevice #0
 
+...
+
+#!/bin/bash
+
+output_file="resumendispositivos.txt"
+
+
+echo "Dispositivos de bloque:" >> "$output_file"
+lsblk >> "$output_file"
+echo >> "$output_file"
+
+echo "Dispositivos USB:" >> "$output_file"
+lsusb >> "$output_file"
+echo >> "$output_file"
+
+echo "Dispositivos PCI:" >> "$output_file"
+lspci >> "$output_file"
+echo >> "$output_file"
+
+echo "Dispositivos de entrada:" >> "$output_file"
+cat /proc/bus/input/devices >> "$output_file"
+echo >> "$output_file"
+
+echo "Salidas de video:" >> "$output_file"
+xrandr >> "$output_file"
+echo >> "$output_file"
+
+echo "Tarjetas de sonido:" >> "$output_file"
+aplay -l >> "$output_file"
+echo >> "$output_file"
+
+echo "La información se ha guardado en $output_file"
+
 
 ```
 
@@ -533,7 +572,13 @@ card 0: I82801AAICH [Intel 82801AA-ICH], device 0: Intel ICH [Intel 82801AA-ICH]
 
 * ¿Qué ventajas tiene usar un script para recopilar esta información?
 
+Usar un script para recopilar información automatiza el proceso, ahorrando tiempo y esfuerzo. Garantiza consistencia en los datos y facilita su almacenamiento o compartición, eliminando la necesidad de ejecutar comandos manualmente cada vez.
+
 * ¿Qué cambios realizaría para personalizar el script?
+
+Para personalizarlo, lo mejor sería adaptar el script a las necesidades específicas, como elegir qué dispositivos o información te interesa más, o cómo prefieres que se guarde la salida.
+
+También se podría añadir una opción para ejecutar ciertos comandos solo bajo condiciones específicas, como filtrar por tipo de dispositivo o por directorios específicos, haciendo el script aún más útil según el contexto.
 
 ---
 ---
