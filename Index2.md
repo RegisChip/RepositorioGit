@@ -202,7 +202,7 @@ Los **Mecanismos de control de acceso** aseguran que solo usuarios autorizados p
 
 Los **Procedimientos para abrir y cerrar archivos** gestionan eficientemente los recursos del sistema, asegurando que los archivos se accedan solo cuando sea necesario y liberando memoria al cerrarlos. Son útiles en sistemas con limitaciones de recursos o que manejan grandes volúmenes de datos.
 
-### EJERCICIO 5: Modelo jerárquico y mecanismos de recuperación en caso de falla.
+### ❇️ EJERCICIO 5: Modelo jerárquico y mecanismos de recuperación en caso de falla.
 
 **Descripción**
 Diseña una estructura jerárquica para un sistema de archivos y simula un escenario de falla en el sistema.
@@ -235,9 +235,69 @@ Describe cómo recuperar los datos utilizando mecanismos de recuperación.
 
 ```
 
-* Simula una falla en un directorio específico y describe los pasos necesarios para recuperarlo. ⭕
+* Simula una falla en un directorio específico y describe los pasos necesarios para recuperarlo. ✔️
 
-* Explica qué herramientas o técnicas de respaldo (backup) utilizarías para evitar pérdida de datos. ⭕
+```java
+
+package com.mycompany.falla_index;
+
+import java.io.*;
+import java.nio.file.*;
+
+/**
+ *
+ * @author pirof
+ */
+public class Falla_index {
+
+    public static void main(String[] args) {
+        
+        String dirProyecto = "C:/Raiz/Documentos/Proyecto/";
+        String dirBackup = "C:/Backup/Proyecto/";
+
+        if (!verificarExistencia(dirProyecto)) {
+            System.out.println("Error: El directorio 'Proyecto' no existe");
+
+            recuperarArchivos(dirBackup, dirProyecto);
+        } else {
+            System.out.println("El directorio 'Proyecto' está intacto");
+        }
+    }
+    
+    public static boolean verificarExistencia(String ruta) {
+        File file = new File(ruta);
+        return file.exists();
+    }
+
+    public static void recuperarArchivos(String respaldo, String destino) {
+        try {
+            Files.createDirectories(Paths.get(destino));
+
+            File dirRespaldo = new File(respaldo);
+            File[] archivosBackup = dirRespaldo.listFiles();
+            if (archivosBackup != null) {
+                for (File archivo : archivosBackup) {
+                    Path sourcePath = archivo.toPath();
+                    Path destinationPath = Paths.get(destino, archivo.getName());
+                    Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Archivo recuperado: " + archivo.getName());
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al recuperar los archivos: " + e.getMessage());
+        }
+    }
+}
+
+```
+
+*Simulacion real sin resultado al ser basado en modelo jerárquico de directorios*
+
+* Explica qué herramientas o técnicas de respaldo (backup) utilizarías para evitar pérdida de datos. ✔️
+
+Para evitar la pérdida de datos, se pueden usar diferentes técnicas de respaldo como copias locales en discos duros o unidades de red, respaldos en la nube que proporcionan seguridad y accesibilidad desde cualquier lugar, y copias fuera del sitio para proteger contra desastres físicos.
+
+Las copias de seguridad automatizadas y programadas también reducen el riesgo de olvidarse de respaldar manualmente. Además, cifrar las copias de seguridad es crucial para proteger la privacidad y evitar accesos no autorizados.
 
 ---
 
