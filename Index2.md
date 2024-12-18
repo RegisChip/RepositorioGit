@@ -210,7 +210,30 @@ Describe cómo recuperar los datos utilizando mecanismos de recuperación.
 
 **Tareas**
 
-* Diseña un modelo jerárquico para un sistema de archivos con al menos tres niveles de directorios. ⭕
+* Diseña un modelo jerárquico para un sistema de archivos con al menos tres niveles de directorios. ✔️
+
+```bash
+
+/ (Raíz)
+├── Documentos/
+│   ├── Trabajo.docx
+│   ├── Notas.txt
+│   └── Proyecto/
+│       ├── Diseño.png
+│       └── Informe.pdf
+├── Imágenes/
+│   ├── Vacaciones/
+│   │   ├── Playa.jpg
+│   │   └── Montaña.jpg
+│   └── Familia.jpg
+└── Música/
+    ├── Rock.mp3
+    ├── Jazz.mp3
+    └── Clásica/
+        ├── Mozart.mp3
+        └── Beethoven.mp3
+
+```
 
 * Simula una falla en un directorio específico y describe los pasos necesarios para recuperarlo. ⭕
 
@@ -282,7 +305,7 @@ Clasifica los mecanismos de seguridad en un sistema operativo y explica cómo ca
 
 **Seguridad de Red** En este ámbito, el uso de protocolos como VPN para encriptar datos y proteger la comunicación entre dispositivos es crucial. Además, soluciones como la segmentación de red, que divide una red en segmentos más pequeños, limitan la propagación de amenazas, mientras que herramientas de monitoreo continuo identifican actividades inusuales en la red.
 
-### EJERCICIO 3: Funciones del sistema de protección.
+### ❇️ EJERCICIO 3: Funciones del sistema de protección.
 
 **Descripción**
 Analiza las funciones que cumple un sistema de protección en un entorno multiusuario.
@@ -301,7 +324,159 @@ La **autorización** ocurre una vez que la autenticación ha tenido éxito. Se t
 
 La **auditoría** implica el registro y monitoreo de las actividades de acceso a los recursos del sistema. A través de registros de auditoría, se mantienen trazas detalladas de las acciones realizadas, como qué usuario accedió a qué recursos y qué operaciones ejecutó. Este proceso es crucial para detectar y analizar actividades sospechosas o no autorizadas, facilitando la investigación de incidentes de seguridad y ayudando a garantizar el cumplimiento de políticas de seguridad y normativas regulatorias.
 
-* Diseña un caso práctico donde se muestren las funciones de un sistema de protección en acción. ⭕
+* Diseña un caso práctico donde se muestren las funciones de un sistema de protección en acción. ✔️
+
+```java
+
+package com.mycompany.proteccion_index;
+
+import java.util.*;
+
+/**
+ *
+ * @author pirof
+ */
+public class Proteccion_index {
+
+    public static void main(String[] args) {
+        
+        initializeSystem();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Sistema de Protección : ");
+        System.out.print("Ingrese su nombre de usuario: ");
+        String username = scanner.nextLine();
+
+        if (!authenticate(username)) {
+            System.out.println("Acceso al sistema denegado.");
+            return;
+        }
+
+        boolean running = true;
+        while (running) {
+            System.out.println("\nOpciones:");
+            System.out.println("1. Acceder a un recurso");
+            System.out.println("2. Ver registro de auditoría");
+            System.out.println("3. Salir");
+            System.out.print("Elige una opción: ");
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    System.out.print("Ingrese el nombre del recurso: ");
+                    String resource = scanner.nextLine();
+                    authorize(username, resource);
+                    break;
+
+                case "2":
+                    showAuditLog();
+                    break;
+
+                case "3":
+                    System.out.println("Saliendo del sistema...");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        }
+        
+        //System.out.println("Hello World!");
+    }
+    
+    private static Map<String, String> userRoles = new HashMap<>();
+
+    private static Map<String, List<String>> resourcePermissions = new HashMap<>();
+
+    private static List<String> auditLog = new ArrayList<>();
+
+    private static void initializeSystem() {
+        userRoles.put("admin", "ADMIN");
+        userRoles.put("user1", "USER");
+        userRoles.put("user2", "USER");
+
+        resourcePermissions.put("file1.txt", Arrays.asList("ADMIN", "USER"));
+        resourcePermissions.put("file2.txt", Arrays.asList("ADMIN"));
+        resourcePermissions.put("settings.config", Arrays.asList("ADMIN"));
+    }
+
+    public static boolean authenticate(String username) {
+        if (userRoles.containsKey(username)) {
+            System.out.println("Usuario autenticado: " + username);
+            return true;
+        } else {
+            System.out.println("Usuario no encontrado: " + username);
+            return false;
+        }
+    }
+
+    public static boolean authorize(String username, String resource) {
+        String role = userRoles.get(username);
+        List<String> allowedRoles = resourcePermissions.get(resource);
+
+        if (allowedRoles == null) {
+            System.out.println("Recurso no encontrado: " + resource);
+            return false;
+        }
+
+        if (allowedRoles.contains(role)) {
+            System.out.println("Acceso permitido al recurso: " + resource);
+            auditLog.add("Usuario " + username + " accedió a " + resource);
+            return true;
+        } else {
+            System.out.println("Acceso denegado al recurso: " + resource);
+            auditLog.add("Intento fallido de acceso: Usuario " + username + " a " + resource);
+            return false;
+        }
+    }
+
+    public static void showAuditLog() {
+        System.out.println("\nRegistro de Auditoría:");
+        for (String log : auditLog) {
+            System.out.println(log);
+        }
+    }
+}
+
+```
+
+Resultado:
+
+```java
+
+Sistema de Protecci�n : 
+Ingrese su nombre de usuario: admin
+Usuario autenticado: admin
+
+Opciones:
+1. Acceder a un recurso
+2. Ver registro de auditor�a
+3. Salir
+Elige una opci�n: 1
+Ingrese el nombre del recurso: settings.config
+Acceso permitido al recurso: settings.config
+
+Opciones:
+1. Acceder a un recurso
+2. Ver registro de auditor�a
+3. Salir
+Elige una opci�n: 2
+
+Registro de Auditor�a:
+Usuario admin accedi� a settings.config
+
+Opciones:
+1. Acceder a un recurso
+2. Ver registro de auditor�a
+3. Salir
+Elige una opci�n: 3
+Saliendo del sistema...
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+
+```
 
 ### EJERCICIO 4: Implantación de matrices de acceso.
 
@@ -316,7 +491,7 @@ Crea e implementa una matriz de acceso para un sistema que contiene usuarios y r
 
 * Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea. ⭕
 
-### EJERCICIO 5: Protección basada en el lenguaje.
+### ❇️ EJERCICIO 5: Protección basada en el lenguaje.
 
 **Descripción**
 Investiga cómo los lenguajes de programación pueden implementar mecanismos de protección.
@@ -331,9 +506,15 @@ La **protección basada en el lenguaje** se refiere a la integración de medidas
 
 En **Java**, la seguridad de la memoria se maneja de manera automática mediante varias características que ayudan a prevenir accesos no autorizados y errores comunes. Un ejemplo clave es la gestión automática de memoria y el uso de referencias en lugar de punteros directos.
 
-* Compara este enfoque con otros mecanismos de protección en sistemas operativos. ⭕
+* Compara este enfoque con otros mecanismos de protección en sistemas operativos. ✔️
 
-### EJERCICIO 6: Validación y amenazas al sistema.
+La **protección basada en el lenguaje** se enfoca en garantizar la seguridad en el desarrollo de software, integrando características en los lenguajes de programación que previenen errores como desbordamientos de búfer o accesos a memoria no autorizada.
+
+Por otro lado, los sistemas operativos *protegen* los recursos en tiempo de ejecución, controlando el acceso a memoria, archivos y otros recursos del sistema. Aunque los lenguajes seguros reducen errores de programación, los sistemas operativos gestionan el acceso y la ejecución de procesos en tiempo real, proporcionando una capa adicional de defensa.
+
+Los lenguajes aseguran el software a nivel de código, mientras que los sistemas operativos protegen el sistema en ejecución.
+
+### ❇️ EJERCICIO 6: Validación y amenazas al sistema.
 
 **Descripción**
 Analiza las principales amenazas a un sistema operativo y los mecanismos de validación utilizados para prevenirlas.
@@ -359,9 +540,154 @@ Cuando inicias sesión en una cuenta en línea, normalmente usas un nombre de us
 **Control de integridad**
 Es un mecanismo que asegura que los datos no han sido modificados de manera no autorizada. Se utiliza para verificar que la información almacenada (archivos, configuraciones, etc.) esté intacta. Un ejemplo común es el uso de sumas de verificación (checksums) o códigos de autenticación de mensajes (MAC), que generan un valor único para cada conjunto de datos. Si los datos se modifican, el valor cambia, lo que permite detectar alteraciones.
 
-* Diseña un esquema de validación para un sistema operativo con múltiples usuarios. ⭕
+* Diseña un esquema de validación para un sistema operativo con múltiples usuarios. ✔️
 
-### EJERCICIO 7: Cifrado.
+```java
+
+package com.mycompany.validacion_index;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Scanner;
+/**
+ *
+ * @author pirof
+ */
+public class Validacion_Index {
+
+    public static void main(String[] args) {
+        
+        //System.out.println("Hello World!");
+        
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+
+        while (running) {
+            System.out.println("    SISTEMA DE VALIDACIÓN   ");
+            System.out.println("1 - Registrar Usuario");
+            System.out.println("2 - Iniciar Sesion");
+            System.out.println("3 - Fin");
+            System.out.println("===============================");
+
+            String choice = scanner.nextLine();
+            switch (choice) {
+                case "1":
+                    System.out.print("\n Ingresa un nombre de usuario: ");
+                    String newUsername = scanner.nextLine();
+                    System.out.print(" Ingresa una contraseña: ");
+                    String newPassword = scanner.nextLine();
+                    registerUser(newUsername, newPassword);
+                    break;
+
+                case "2":
+                    System.out.print("\n Ingresa tu nombre de usuario: ");
+                    String username = scanner.nextLine();
+                    System.out.print(" Ingresa tu contraseña: ");
+                    String password = scanner.nextLine();
+                    loginUser(username, password);
+                    break;
+
+                case "3":
+                    System.out.println("\n Saliendo del sistema. ¡Hasta luego!");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("\n Opción inválida");
+            }
+        }
+    }
+    
+    private static Map<String, String> userDatabase = new HashMap<>();
+
+    public static void registerUser(String username, String password) {
+        if (userDatabase.containsKey(username)) {
+            System.out.println("\n El usuario '" + username + "' ya está registrado. Elige otro nombre.");
+            return;
+        }
+        String hashedPassword = hashPassword(password);
+        userDatabase.put(username, hashedPassword);
+        System.out.println("\n Usuario registrado correctamente: " + username);
+    }
+
+    public static boolean loginUser(String username, String password) {
+        String hashedPassword = userDatabase.get(username);
+        if (hashedPassword == null) {
+            System.out.println("\n Usuario no encontrado.");
+            return false;
+        }
+        if (hashedPassword.equals(hashPassword(password))) {
+            System.out.println("\n Inicio de sesión exitoso. Bienvenido, " + username);
+            return true;
+        } else {
+            System.out.println("\n Contraseña incorrecta.");
+            return false;
+        }
+    }
+
+    private static String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error al hashear la contraseña.", e);
+        }
+    }
+
+}
+
+```
+
+Resultado:
+
+```java
+
+    SISTEMA DE VALIDACI�N   
+1 - Registrar Usuario
+2 - Iniciar Sesion
+3 - Fin
+===============================
+1
+
+ Ingresa un nombre de usuario: Regina
+ Ingresa una contrase�a: 12345
+
+ Usuario registrado correctamente: Regina
+    SISTEMA DE VALIDACI�N   
+1 - Registrar Usuario
+2 - Iniciar Sesion
+3 - Fin
+===============================
+2
+
+ Ingresa tu nombre de usuario: Regina
+ Ingresa tu contrase�a: 12345
+
+ Inicio de sesi�n exitoso. Bienvenido, Regina
+    SISTEMA DE VALIDACI�N   
+1 - Registrar Usuario
+2 - Iniciar Sesion
+3 - Fin
+===============================
+3
+
+ Saliendo del sistema. �Hasta luego!
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+
+```
+
+### ❇️ EJERCICIO 7: Cifrado.
 
 **Descripción**
 Explora cómo los mecanismos de cifrado protegen la información en un sistema operativo.
@@ -385,4 +711,100 @@ El cifrado simétrico es estupendo cuando se trabaja con datos sensibles a gran 
 Un buen ejemplo es el cifrado del correo electrónico. Con el cifrado asimétrico, cualquiera puede utilizar tu clave pública para enviarte un correo electrónico cifrado que sólo puedes descifrar con tu clave privada.
 Naturalmente, el asimétrico es un estándar de cifrado más avanzado y, por lo tanto, es más lento y consume más recursos. Por ello, suele utilizarse en transacciones más pequeñas, normalmente para establecer canales de comunicación seguros o autenticar usuarios.
 
-* Simula el proceso de cifrado y descifrado de un archivo con una calve dada. ⭕
+* Simula el proceso de cifrado y descifrado de un archivo con una calve dada. ✔️
+
+```java
+
+package com.mycompany.cifrado_index;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.security.Key;
+import java.util.Base64;
+
+/**
+ *
+ * @author pirof
+ */
+public class Cifrado_index {
+
+    public static void main(String[] args) {
+        
+        
+        try {
+            SecretKey secretKey = generateKey();
+
+            String encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+            System.out.println("Clave generada: " + encodedKey);
+
+            byte[] decodedKey = Base64.getDecoder().decode(encodedKey);
+            SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+
+            File originalFile = new File("archivo_original.txt");
+            File encryptedFile = new File("archivo_cifrado.txt");
+            File decryptedFile = new File("archivo_descifrado.txt");
+
+            encryptFile(originalFile, encryptedFile, originalKey);
+            System.out.println("Archivo cifrado correctamente.");
+
+            decryptFile(encryptedFile, decryptedFile, originalKey);
+            System.out.println("Archivo descifrado correctamente.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public static SecretKey generateKey() throws Exception {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+        keyGenerator.init(128);
+        return keyGenerator.generateKey();
+    }
+
+    public static void encryptFile(File inputFile, File outputFile, Key key) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+
+        try (FileInputStream fis = new FileInputStream(inputFile);
+             FileOutputStream fos = new FileOutputStream(outputFile)) {
+            byte[] inputBytes = fis.readAllBytes();
+            byte[] outputBytes = cipher.doFinal(inputBytes);
+
+            fos.write(outputBytes);
+        }
+    }
+
+    public static void decryptFile(File inputFile, File outputFile, Key key) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, key);
+
+        try (FileInputStream fis = new FileInputStream(inputFile);
+             FileOutputStream fos = new FileOutputStream(outputFile)) {
+            byte[] inputBytes = fis.readAllBytes();
+            byte[] outputBytes = cipher.doFinal(inputBytes);
+
+            fos.write(outputBytes);
+        }
+    }
+    
+}
+
+```
+
+Resultado:
+
+```java
+--- exec:3.1.0:exec (default-cli) @ Cifrado_index ---
+Clave generada: jQZz+8/eNUE8nMjGHpi+Lw==
+Archivo cifrado correctamente.
+Archivo descifrado correctamente.
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+```
