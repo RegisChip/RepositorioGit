@@ -538,18 +538,138 @@ BUILD SUCCESS
 
 ```
 
-### EJERCICIO 4: Implantación de matrices de acceso.
+### ❇️ EJERCICIO 4: Implantación de matrices de acceso.
 
 **Descripción**
 Crea e implementa una matriz de acceso para un sistema que contiene usuarios y recursos con diferentes niveles de permisos.
 
 **Tareas**
 
-* Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos. ⭕
+* Diseña una matriz de acceso para un sistema con al menos 3 usuarios y 4 recursos. ✔️
 
-* Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo. ⭕
+```java
 
-* Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea. ⭕
+package com.mycompany.matriz_index;
+
+/**
+ *
+ * @author pirof
+ */
+public class Matriz_index {
+    
+    static String[] usuarios = {"Usuario 1", "Usuario 2", "Usuario 3"};
+    static String[] recursos = {"Recurso 1", "Recurso 2", "Recurso 3"};
+
+    static String[][] matriz = {
+        {"Sí", "Sí", "No"},  // Usuario 1
+        {"Sí", "No", "Sí"},  // Usuario 2
+        {"No", "Sí", "Sí"}   // Usuario 3
+    };
+    
+    public static void main(String[] args) {
+        
+        for (int i = 0; i < usuarios.length; i++) {
+            for (int j = 0; j < recursos.length; j++) {
+                verificarAcceso(i, j);
+            }
+        }
+    }
+    
+    public static void verificarAcceso(int usuarioIndex, int recursoIndex) {
+        System.out.println(usuarios[usuarioIndex] + " tiene acceso al " 
+                + recursos[recursoIndex] + ": " 
+                + matriz[usuarioIndex][recursoIndex]);
+    }
+
+}
+
+```
+
+Resultado:
+
+```java
+
+Usuario 1 tiene acceso al Recurso 1: Si
+Usuario 1 tiene acceso al Recurso 2: Si
+Usuario 1 tiene acceso al Recurso 3: No
+Usuario 2 tiene acceso al Recurso 1: Si
+Usuario 2 tiene acceso al Recurso 2: No
+Usuario 2 tiene acceso al Recurso 3: Si
+Usuario 3 tiene acceso al Recurso 1: No
+Usuario 3 tiene acceso al Recurso 2: Si
+Usuario 3 tiene acceso al Recurso 3: Si
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+
+```
+
+* Explica cómo esta matriz se utiliza para controlar el acceso en un sistema operativo. ✔️
+
+La matriz de acceso usada en el código se puede usar en un sistema operativo para controlar qué usuarios tienen acceso a qué recursos. Cada fila representa a un usuario y cada columna a un recurso, con "Sí" o "No" indicando si el usuario puede interactuar con el recurso. Cuando un usuario intenta realizar una acción sobre un recurso, el sistema operativo consulta la matriz. Si el valor es "Sí", se permite la acción; si es "No", se deniega. Este método ayuda a mantener la seguridad y el control de acceso a los recursos del sistema.
+
+* Simula un escenario donde un usuario intenta acceder a un recurso no permitido y cómo la matriz lo bloquea. ✔️
+
+```java
+
+package com.mycompany.bloqueo_index;
+
+/**
+ *
+ * @author pirof
+ */
+public class Bloqueo_index {
+    
+    static String[] usuarios = {"Usuario 1", "Usuario 2", "Usuario 3"};
+    static String[] recursos = {"Recurso 1", "Recurso 2", "Recurso 3"};
+
+    static String[][] matriz = {
+        {"Sí", "Sí", "No"},  // Usuario 1
+        {"Sí", "No", "Sí"},  // Usuario 2
+        {"No", "Sí", "Sí"}   // Usuario 3
+    };
+    
+    public static void main(String[] args) {
+        
+        System.out.println("Intentando acceso de Usuario 1 a Recurso 3:");
+        verificarAcceso(0, 2);
+
+        System.out.println("\nIntentando acceso de Usuario 2 a Recurso 2:");
+        verificarAcceso(1, 1);
+
+        System.out.println("\nIntentando acceso de Usuario 3 a Recurso 1:");
+        verificarAcceso(2, 0);
+    }
+    
+    public static void verificarAcceso(int usuarioIndex, int recursoIndex) {
+        if (matriz[usuarioIndex][recursoIndex].equals("No")) {
+            System.out.println(usuarios[usuarioIndex] + " no tiene acceso al " + recursos[recursoIndex] + ", acceso bloqueado.");
+        } else {
+            System.out.println(usuarios[usuarioIndex] + " tiene acceso al " + recursos[recursoIndex] + ", acceso permitido.");
+        }
+    }
+}
+
+```
+
+Resultado:
+
+```java
+
+--- exec:3.1.0:exec (default-cli) @ Bloqueo_index ---
+Intentando acceso de Usuario 1 a Recurso 3:
+Usuario 1 no tiene acceso al Recurso 3, acceso bloqueado.
+
+Intentando acceso de Usuario 2 a Recurso 2:
+Usuario 2 no tiene acceso al Recurso 2, acceso bloqueado.
+
+Intentando acceso de Usuario 3 a Recurso 1:
+Usuario 3 no tiene acceso al Recurso 1, acceso bloqueado.
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+
+```
 
 ### ❇️ EJERCICIO 5: Protección basada en el lenguaje.
 
